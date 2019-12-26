@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatEarthControlSystem", "FlatEarthControlSystem\FlatEarthControlSystem.csproj", "{007277BB-3B54-46CB-9298-8E43303939FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatEarthControlSystemTests", "FlatEarthControlSystemTests\FlatEarthControlSystemTests.csproj", "{134039EC-AF9B-4127-89D7-24ED0B65DC5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatEarthControlSystemTestGame", "FlatEarthControlSystemTestGame\FlatEarthControlSystemTestGame.csproj", "{8A608087-84FF-46BA-B7B8-37A3238365DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{007277BB-3B54-46CB-9298-8E43303939FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007277BB-3B54-46CB-9298-8E43303939FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007277BB-3B54-46CB-9298-8E43303939FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007277BB-3B54-46CB-9298-8E43303939FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{134039EC-AF9B-4127-89D7-24ED0B65DC5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{134039EC-AF9B-4127-89D7-24ED0B65DC5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{134039EC-AF9B-4127-89D7-24ED0B65DC5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{134039EC-AF9B-4127-89D7-24ED0B65DC5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A608087-84FF-46BA-B7B8-37A3238365DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A608087-84FF-46BA-B7B8-37A3238365DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A608087-84FF-46BA-B7B8-37A3238365DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A608087-84FF-46BA-B7B8-37A3238365DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
