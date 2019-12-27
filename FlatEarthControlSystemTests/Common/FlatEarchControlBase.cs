@@ -41,5 +41,51 @@ namespace FlatEarthControlSystemTests.Common
             flatEarth.SetCurrentRoomId("5,5");
             return flatEarth;
         }
+
+        protected FlatEarth GetVisitDescriptionTestData()
+        {
+            var flatEarth = new FlatEarth();
+
+            var startRoom = new Room("1,1")
+            {
+                FirstEntryDescription = "1-1",
+                Description = "1-2"
+            };
+            startRoom.AddExit("SOUTH", "1,2");
+            flatEarth.World.AddRoom(startRoom);
+
+            var secondRoom = new Room("1,2")
+            {
+                FirstEntryDescription = "2-1",
+                Description = "2-2"
+            };
+            secondRoom.AddExit("NORTH", "1,1");
+            flatEarth.World.AddRoom(secondRoom);
+            return flatEarth;
+        }
+
+        public FlatEarth GetLookTestData()
+        {
+            var flatEarth = new FlatEarth();
+
+            var startRoom = new Room("1,1")
+            {
+                FirstLook = "1-1",
+                Look = "1-2"
+            };
+            startRoom.AddExit("SOUTH", "1,2");
+            flatEarth.World.AddRoom(startRoom);
+
+            var secondRoom = new Room("1,2")
+            {
+                FirstLook = "2-1",
+                Look = "2-2"
+            };
+            secondRoom.AddExit("NORTH", "1,1");
+            flatEarth.World.AddRoom(secondRoom);
+
+            flatEarth.SetCurrentRoomId("1,1");
+            return flatEarth;
+        }
     }
 }

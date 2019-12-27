@@ -93,5 +93,57 @@ CURRENT ROOM 5,5
             Assert.True(targetId == "4,5");
             Assert.False(currentRoom.CanGo(new Noun("SOUTH"), out targetId));
         }
+        
+        [Fact]
+        public void CanAdjustDescriptionResponseFromVisitCount()
+        {
+            var flatEarth = new FlatEarth();
+            flatEarth.Load(@"
+BEGIN ROOM 1,1
+
+   BEGIN EXIT SOUTH: 2,1
+   END EXIT
+
+   FIRST DESCRIPTION: 1-1
+   DESCRIPTION: 2-1
+
+END ROOM
+
+BEGIN ROOM 1,2
+
+   BEGIN EXIT NORTH: 1,1
+   END EXIT
+
+   FIRST DESCRIPTION: 2-1
+   DESCRIPTION: 2-2
+
+END ROOM
+
+CURRENT ROOM 1,1
+");
+            Assert.True(flatEarth.SetCurrentRoomId("1,1") == "1-1");
+            Assert.True(flatEarth.Go(new Noun("SOUTH")).Text == "2-1");
+            Assert.True(flatEarth.Go(new Noun("NORTH")).Text == "1-2");
+            Assert.True(flatEarth.Go(new Noun("SOUTH")).Text == "2-2");
+        }
+        
+        [Fact]
+        public void CanAdjustLookResponseFromVisitCount()
+        {
+            var flatEarth = new FlatEarth();
+            flatEarth.Load(@"
+");
+            Assert.True(flatEarth.Look().Text == "1-1");
+            Assert.True(flatEarth.Look().Text == "1-2");
+            Assert.True(flatEarth.Look().Text == "1-2");
+            flatEarth.Go(new Noun("SOUTH"));
+            Assert.True(flatEarth.Look().Text == "2-1");
+            Assert.True(flatEarth.Look().Text == "2-2");
+            Assert.True(flatEarth.Look().Text == "2-2");
+            flatEarth.Go(new Noun("NORTH"));
+            Assert.True(flatEarth.Look().Text == "1-1");
+            Assert.True(flatEarth.Look().Text == "1-2");
+            Assert.True(flatEarth.Look().Text == "1-2");
+        }
     }
 }

@@ -31,12 +31,17 @@ namespace FlatEarthControlSystem.WorldDefinition
             VisitCount <= 1
                 ? string.IsNullOrWhiteSpace(FirstEntryDescription) ? Description : FirstEntryDescription
                 : string.IsNullOrWhiteSpace(Description) ? FirstEntryDescription : Description;
-        
-        public string GetLookText() =>
-            VisitCount <= 1
+
+        public string GetLookText()
+        {
+            LookCount++;
+            return LookCount <= 1
                 ? string.IsNullOrWhiteSpace(FirstLook) ? Look : FirstLook
-                : string.IsNullOrWhiteSpace(Look) ? FirstLook : Look;
-        
+                : string.IsNullOrWhiteSpace(Look)
+                    ? FirstLook
+                    : Look;
+        }
+
         public bool CanGo(Noun direction, out string targetRoomId)
         {
             var exit = Exits.FirstOrDefault(x => x.DirectionName == direction.StringRepresentation);

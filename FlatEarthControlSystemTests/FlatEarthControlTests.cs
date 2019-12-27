@@ -72,24 +72,7 @@ namespace FlatEarthControlSystemTests
         [Fact]
         public void CanAdjustDescriptionResponseFromVisitCount()
         {
-            var flatEarth = new FlatEarth();
-
-            var startRoom = new Room("1,1")
-            {
-                FirstEntryDescription = "1-1",
-                Description = "1-2"
-            };
-            startRoom.AddExit("SOUTH", "1,2");
-            flatEarth.World.AddRoom(startRoom);
-
-            var secondRoom = new Room("1,2")
-            {
-                FirstEntryDescription = "2-1",
-                Description = "2-2"
-            };
-            secondRoom.AddExit("NORTH", "1,1");
-            flatEarth.World.AddRoom(secondRoom);
-
+            var flatEarth = GetVisitDescriptionTestData();
             Assert.True(flatEarth.SetCurrentRoomId("1,1") == "1-1");
             Assert.True(flatEarth.Go(new Noun("SOUTH")).Text == "2-1");
             Assert.True(flatEarth.Go(new Noun("NORTH")).Text == "1-2");
@@ -99,25 +82,7 @@ namespace FlatEarthControlSystemTests
         [Fact]
         public void CanAdjustLookResponseFromVisitCount()
         {
-            var flatEarth = new FlatEarth();
-
-            var startRoom = new Room("1,1")
-            {
-                FirstLook = "1-1",
-                Look = "1-2"
-            };
-            startRoom.AddExit("SOUTH", "1,2");
-            flatEarth.World.AddRoom(startRoom);
-
-            var secondRoom = new Room("1,2")
-            {
-                FirstLook = "2-1",
-                Look = "2-2"
-            };
-            secondRoom.AddExit("NORTH", "1,1");
-            flatEarth.World.AddRoom(secondRoom);
-
-            flatEarth.SetCurrentRoomId("1,1");
+            var flatEarth = GetLookTestData();
             Assert.True(flatEarth.Look().Text == "1-1");
             Assert.True(flatEarth.Look().Text == "1-2");
             Assert.True(flatEarth.Look().Text == "1-2");
@@ -130,6 +95,5 @@ namespace FlatEarthControlSystemTests
             Assert.True(flatEarth.Look().Text == "1-2");
             Assert.True(flatEarth.Look().Text == "1-2");
         }
-        
     }
 }

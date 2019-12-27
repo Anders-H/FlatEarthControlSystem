@@ -34,6 +34,9 @@ namespace FlatEarthControlSystem.WorldDefinitionParser
             const string notDiscovered = "NOT DISCOVERED";
             const string endExit = "END EXIT";
 
+            const string firstDescription = "FIRST DESCRIPTION:";
+            const string description = "DESCRIPTION:";
+            
             var world = new World();
             Room r = null;
             Exit e = null;
@@ -99,6 +102,22 @@ namespace FlatEarthControlSystem.WorldDefinitionParser
                     if (r == null || e == null)
                         throw new Exception($"Unexpected: {notDiscovered}");
                     e.Discovered = false;
+                    continue;
+                }
+
+                if (row.StartsWith(firstDescription))
+                {
+                    if (r == null)
+                        throw new Exception($"Unexpected: {firstDescription}");
+                    r.FirstEntryDescription = row.Substring(firstDescription.Length).Trim();
+                    continue;
+                }
+                
+                if (row.StartsWith(description))
+                {
+                    if (r == null)
+                        throw new Exception($"Unexpected: {description}");
+                    r.Description = row.Substring(description.Length).Trim();
                     continue;
                 }
                 

@@ -39,5 +39,32 @@ namespace FlatEarthControlSystemTests
             Assert.True(response.Success);
             Assert.True(response.Text == "EXITS ARE: NORTH, WEST AND SOUTH.");
         }
+        
+        [Fact]
+        public void CanAdjustDescriptionResponseFromVisitCount()
+        {
+            var flatEarth = GetVisitDescriptionTestData();
+            Assert.True(flatEarth.SetCurrentRoomId("1,1") == "1-1");
+            Assert.True(flatEarth.Do("GO SOUTH").Text == "2-1");
+            Assert.True(flatEarth.Do("GO NORTH").Text == "1-2");
+            Assert.True(flatEarth.Do("GO SOUTH").Text == "2-2");
+        }
+        
+        [Fact]
+        public void CanAdjustLookResponseFromVisitCount()
+        {
+            var flatEarth = GetLookTestData();
+            Assert.True(flatEarth.Look().Text == "1-1");
+            Assert.True(flatEarth.Look().Text == "1-2");
+            Assert.True(flatEarth.Look().Text == "1-2");
+            flatEarth.Do("GO SOUTH");
+            Assert.True(flatEarth.Look().Text == "2-1");
+            Assert.True(flatEarth.Look().Text == "2-2");
+            Assert.True(flatEarth.Look().Text == "2-2");
+            flatEarth.Do("GO NORTH");
+            Assert.True(flatEarth.Look().Text == "1-1");
+            Assert.True(flatEarth.Look().Text == "1-2");
+            Assert.True(flatEarth.Look().Text == "1-2");
+        }
     }
 }
