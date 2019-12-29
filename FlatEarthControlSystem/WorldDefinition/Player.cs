@@ -14,6 +14,7 @@ namespace FlatEarthControlSystem.WorldDefinition
             var room = world.GetRoom(roomId);
             if (room == null)
                 throw new SystemException($"Room not found: {roomId}");
+            
             room.VisitCount++;
             _currentRoomId = room.Id;
             room.LookCount = 0;

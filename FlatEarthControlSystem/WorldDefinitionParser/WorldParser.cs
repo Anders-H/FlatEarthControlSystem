@@ -36,7 +36,10 @@ namespace FlatEarthControlSystem.WorldDefinitionParser
 
             const string firstDescription = "FIRST DESCRIPTION:";
             const string description = "DESCRIPTION:";
-            
+
+            const string firstLook = "FIRST LOOK:";
+            const string look = "LOOK:";
+
             var world = new World();
             Room r = null;
             Exit e = null;
@@ -118,6 +121,22 @@ namespace FlatEarthControlSystem.WorldDefinitionParser
                     if (r == null)
                         throw new Exception($"Unexpected: {description}");
                     r.Description = row.Substring(description.Length).Trim();
+                    continue;
+                }
+                
+                if (row.StartsWith(firstLook))
+                {
+                    if (r == null)
+                        throw new Exception($"Unexpected: {firstLook}");
+                    r.FirstLook = row.Substring(firstLook.Length).Trim();
+                    continue;
+                }
+                
+                if (row.StartsWith(look))
+                {
+                    if (r == null)
+                        throw new Exception($"Unexpected: {look}");
+                    r.Look = row.Substring(look.Length).Trim();
                     continue;
                 }
                 
