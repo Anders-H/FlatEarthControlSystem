@@ -1,26 +1,33 @@
-﻿namespace FlatEarthControlSystem.ControlCommandParser
+﻿using System;
+using FlatEarthControlSystem.PreProcessing;
+
+namespace FlatEarthControlSystem.ControlCommandParser
 {
     public class CommandParserResult
     {
         public const string GeneralErrorMessage = "I DON'T UNDERSTAND.";
         public bool Success { get; }
         public string? Message { get; }
-        public Command? Result { get; }
+        public SuggestedCommand? Result { get; }
+        public PreProcessorIntention? Intention { get; }
 
-        private CommandParserResult(bool success, string? message, Command? result)
+        private CommandParserResult(bool success, string? message, SuggestedCommand? result, PreProcessorIntention? intention)
         {
             Success = success;
             Message = message;
             Result = result;
+            Intention = intention;
+            if (Success && !Intention.HasValue)
+                throw new ArgumentException("Missing intention.");
         }
 
-        internal static CommandParserResult CreateSuccessResult(Command result) =>
-            new CommandParserResult(true, null, result);
+        internal static CommandParserResult CreateSuccessResult(SuggestedCommand result, PreProcessorIntention intention) =>
+            new CommandParserResult(true, null, result, intention);
         
         internal static CommandParserResult CreateFailResult(string message) =>
-            new CommandParserResult(false, message, null);
+            new CommandParserResult(false, message, null, null);
         
         internal static CommandParserResult CreateFailResult() =>
-            new CommandParserResult(false, GeneralErrorMessage, null);
+            new CommandParserResult(false, GeneralErrorMessage, null, null);
     }
 }

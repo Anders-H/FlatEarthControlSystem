@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FlatEarthControlSystem.PreProcessing;
 using FlatEarthControlSystem.WorldDefinition;
 
 namespace FlatEarthControlSystem.ControlCommandParser
@@ -8,7 +9,7 @@ namespace FlatEarthControlSystem.ControlCommandParser
     {
         private readonly Room _room;
         private readonly string _phrase;
-        private List<string> _parts;
+        private readonly List<string> _parts;
         
         public CommandParser(Room room, string phrase)
         {
@@ -26,21 +27,33 @@ namespace FlatEarthControlSystem.ControlCommandParser
             {
                 case "INVENTORY":
                 case "INV":
-                    return CommandParserResult.CreateSuccessResult(new Command(Intention.Inventory, "SHOW", "INVENTORY"));
+                    return CommandParserResult.CreateSuccessResult(
+                        new SuggestedCommand("SHOW", "INVENTORY"),
+                        PreProcessorIntention.Inventory);
                 case "N":
                 case "NORTH":
-                    return CommandParserResult.CreateSuccessResult(new Command(Intention.Move, "GO", "NORTH"));
+                    return CommandParserResult.CreateSuccessResult(
+                        new SuggestedCommand("GO", "NORTH"),
+                        PreProcessorIntention.Move);
                 case "E":
                 case "EAST":
-                    return CommandParserResult.CreateSuccessResult(new Command(Intention.Move, "GO", "EAST"));
+                    return CommandParserResult.CreateSuccessResult(
+                        new SuggestedCommand("GO", "EAST"),
+                        PreProcessorIntention.Move);
                 case "S":
                 case "SOUTH":
-                    return CommandParserResult.CreateSuccessResult(new Command(Intention.Move, "GO", "SOUTH"));
+                    return CommandParserResult.CreateSuccessResult(
+                        new SuggestedCommand("GO", "SOUTH"),
+                        PreProcessorIntention.Move);
                 case "W":
                 case "WEST":
-                    return CommandParserResult.CreateSuccessResult(new Command(Intention.Move, "GO", "SOUTH"));
+                    return CommandParserResult.CreateSuccessResult(
+                        new SuggestedCommand("GO", "SOUTH"),
+                        PreProcessorIntention.Move);
                 case "EXITS":
-                    return CommandParserResult.CreateSuccessResult(new Command(Intention.Exits, "SHOW", "EXITS"));
+                    return CommandParserResult.CreateSuccessResult(
+                        new SuggestedCommand("SHOW", "EXITS"),
+                        PreProcessorIntention.Exits);
             }
             if (_parts.Count <= 0)
                 return CommandParserResult.CreateFailResult();
@@ -63,7 +76,9 @@ namespace FlatEarthControlSystem.ControlCommandParser
             var exit = _room.GetDiscoveredExit(direction);
             return exit == null
                 ? CommandParserResult.CreateFailResult("CAN'T GO THAT WAY.")
-                : CommandParserResult.CreateSuccessResult(new Command(Intention.Move, "GO", exit.ToString()));
+                : CommandParserResult.CreateSuccessResult(
+                    new SuggestedCommand("GO", exit.ToString()),
+                    PreProcessorIntention.Move);
         }
 
         private CommandParserResult Show()
@@ -76,9 +91,13 @@ namespace FlatEarthControlSystem.ControlCommandParser
             {
                 case "INVENTORY":
                 case "INV":
-                    return CommandParserResult.CreateSuccessResult(new Command(Intention.Inventory, "SHOW", "INVENTORY"));
+                    return CommandParserResult.CreateSuccessResult(
+                        new SuggestedCommand("SHOW", "INVENTORY"),
+                        PreProcessorIntention.Inventory);
                 case "EXITS":
-                    return CommandParserResult.CreateSuccessResult(new Command(Intention.Exits, "SHOW", "EXITS"));
+                    return CommandParserResult.CreateSuccessResult(
+                        new SuggestedCommand("SHOW", "EXITS"),
+                        PreProcessorIntention.Exits);
             }
             return CommandParserResult.CreateFailResult(error);
         }

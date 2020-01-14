@@ -17,7 +17,8 @@ namespace FlatEarthControlSystem.WorldDefinition
             Rooms.Count;
         
         public bool RoomExist(string id) =>
-            Rooms.Exists(x => string.Compare(x.Id, id, StringComparison.CurrentCultureIgnoreCase) == 0);
+            Rooms.Exists(x =>
+                string.Compare(x.Id, id, StringComparison.CurrentCultureIgnoreCase) == 0);
 
         public void AddRoom(Room room) =>
             Rooms.Add(room);
@@ -29,5 +30,8 @@ namespace FlatEarthControlSystem.WorldDefinition
             index >= 0 && Rooms.Count > index
                 ? Rooms[index]
                 : null;
+
+        public List<Room> GetAllRooms() =>
+            Rooms;
     }
 }

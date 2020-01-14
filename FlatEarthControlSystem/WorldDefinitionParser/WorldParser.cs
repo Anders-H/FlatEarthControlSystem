@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using FlatEarthControlSystem.WorldDefinition;
 
 namespace FlatEarthControlSystem.WorldDefinitionParser
@@ -142,8 +141,11 @@ namespace FlatEarthControlSystem.WorldDefinitionParser
                 
                 throw new Exception($"Unknown: {row}");
             }
-            
-            //TODO: Check exit refering to existing rooms.
+
+            foreach (var room in world.GetAllRooms())
+            {
+                
+            }
             
             return world;
         }
