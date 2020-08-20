@@ -49,33 +49,46 @@ namespace FlatEarthControlSystem
         public CommandResult Do(string command)
         {
             var result = new CommandParser(GetCurrentRoom(), command).Parse();
+            var preProcessor = CustomPreProcessor;
+            
             if (!result.Success)
             {
                 if (CustomPreProcessor == null)
                     return Fail(string.IsNullOrWhiteSpace(result.Message) ? "I DON'T UNDERSTAND." : result.Message);
-                //TODO Call pre processor.
-            }
 
-
-            try
-            {
-                switch (result.Intention)
+                var preProcessorArguments = new PreProcessorArguments
                 {
-                    case PreProcessorIntention.Inventory:
-                        break;
-                    case PreProcessorIntention.Move:
-                        return Go(result.Result.Part2Noun);
-                    case PreProcessorIntention.Exits:
-                        return GetExits();
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-                return null;
+                    SourceText = command,
+                    PreProcessorIntention = PreProcessorIntention.ParseFailed
+                };
+
+                CustomPreProcessor.Invoke(preProcessorArguments);
+
+                if (preProcessorArguments.Cancel)
+                    return Fail(string.IsNullOrWhiteSpace(preProcessorArguments.CancelText)
+                        ? "I DON'T UNDERSTAND."
+                        : preProcessorArguments.CancelText);
+
+                preProcessor = null;
             }
-            finally
+
+            if (preProcessor != null)
             {
-                //TODO: Post processing
+                
             }
+            
+            switch (result.Intention)
+            {
+                case PreProcessorIntention.Inventory:
+                    break;
+                case PreProcessorIntention.Move:
+                    return Go(result.Result.Part2Noun);
+                case PreProcessorIntention.Exits:
+                    return GetExits();
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            return null;
         }
 
         public CommandResult Go(Noun direction)

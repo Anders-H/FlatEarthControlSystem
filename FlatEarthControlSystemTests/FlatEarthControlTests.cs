@@ -1,5 +1,4 @@
-﻿using FlatEarthControlSystem;
-using FlatEarthControlSystem.ControlCommandParser.Words;
+﻿using FlatEarthControlSystem.ControlCommandParser.Words;
 using FlatEarthControlSystem.WorldDefinition;
 using FlatEarthControlSystemTests.Common;
 using Xunit;
