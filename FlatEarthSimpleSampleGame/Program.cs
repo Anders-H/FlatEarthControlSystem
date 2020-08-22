@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using FlatEarthControlSystem;
+using FlatEarthControlSystem.WorldDefinition;
 
 namespace FlatEarthSimpleSampleGame
 {
@@ -19,6 +20,9 @@ namespace FlatEarthSimpleSampleGame
                 flatEarth.Load(source);
             }
 
+            var room = flatEarth.GetCurrentRoom();
+            Console.WriteLine(room.GetDescription());
+
             do
             {
                 Console.Write("> ");
@@ -30,9 +34,9 @@ namespace FlatEarthSimpleSampleGame
                     continue;
                 }
 
-                var room = flatEarth.GetCurrentRoom();
-
-                //room.VisitCount
+                var result = flatEarth.Do(input);
+                room = flatEarth.GetCurrentRoom();
+                Console.WriteLine(result.Text);
 
             } while (true);
         }
