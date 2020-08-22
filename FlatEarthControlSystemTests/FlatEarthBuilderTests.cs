@@ -7,6 +7,28 @@ namespace FlatEarthControlSystemTests
     public class FlatEarthBuilderTests
     {
         [Fact]
+        public void WithoutUppercaseDeclarationGameIsMixedCase()
+        {
+            var flatEarth = new FlatEarth();
+            flatEarth.Load(@"
+BEGIN ROOM 100,100
+DESCRIPTION: You are in a room.
+END ROOM
+CURRENT ROOM 100,100
+");
+            Assert.True(flatEarth.GetCurrentRoom().GetDescription() == "You are in a room.");
+
+            flatEarth.Load(@"
+BEGIN ROOM 100,100
+DESCRIPTION: You are in a room.
+END ROOM
+CURRENT ROOM 100,100
+UPPERCASE
+");
+            Assert.True(flatEarth.GetCurrentRoom().GetDescription() == "YOU ARE IN A ROOM.");
+        }
+
+        [Fact]
         public void CanDoPaths()
         {
             var flatEarth = new FlatEarth();
@@ -25,23 +47,23 @@ CURRENT ROOM 1,1
 ");
             Assert.True(flatEarth.GetCurrentRoom().Id == "1,1");
             Assert.True(flatEarth.World.RoomCount == 2);
-            Assert.True(flatEarth.World.GetRoom(0).Id == "1,1");
-            Assert.True(flatEarth.World.GetRoom(0)
+            Assert.True(flatEarth.World.GetRoom(0)!.Id == "1,1");
+            Assert.True(flatEarth.World.GetRoom(0)!
                 .CanGo(
                     new Noun("SOUTH"),
                     out var targetRoomId
                 )
             );
             Assert.True(targetRoomId == "1,2");
-            Assert.True(flatEarth.World.GetRoom(1).Id == "1,2");
-            Assert.True(flatEarth.World.GetRoom(1)
+            Assert.True(flatEarth.World.GetRoom(1)!.Id == "1,2");
+            Assert.True(flatEarth.World.GetRoom(1)!
                 .CanGo(
                     new Noun("NORTH"),
                     out targetRoomId
                 )
             );
             Assert.True(targetRoomId == "1,1");
-            Assert.False(flatEarth.World.GetRoom(1)
+            Assert.False(flatEarth.World.GetRoom(1)!
                 .CanGo(
                     new Noun("SOUTH"),
                     out _

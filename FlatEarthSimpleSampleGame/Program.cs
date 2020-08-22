@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using FlatEarthControlSystem;
-using FlatEarthControlSystem.WorldDefinition;
 
 namespace FlatEarthSimpleSampleGame
 {

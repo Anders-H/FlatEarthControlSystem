@@ -14,8 +14,8 @@ namespace FlatEarthControlSystem
         public static readonly Verbs Verbs;
         public static readonly KnownFills KnownFills;
 
-        public PreProcessor CustomPreProcessor;
-        public PostProcessor CustomPostProcessor;
+        public PreProcessor? CustomPreProcessor;
+        public PostProcessor? CustomPostProcessor;
         
         public World World { get; private set; }
         public Player Player { get; private set; }
@@ -30,6 +30,13 @@ namespace FlatEarthControlSystem
         {
             World = new World();
             Player = new Player();
+            Uppercase = false;
+        }
+
+        public bool Uppercase
+        {
+            get => World.Uppercase;
+            set => World.Uppercase = value;
         }
 
         public void Load(string data)
@@ -46,7 +53,7 @@ namespace FlatEarthControlSystem
             return room.GetDescription();
         }
 
-        public CommandResult Do(string command)
+        public CommandResult? Do(string command)
         {
             var result = new CommandParser(GetCurrentRoom(), command).Parse();
             var preProcessor = CustomPreProcessor;
@@ -54,7 +61,7 @@ namespace FlatEarthControlSystem
             if (!result.Success)
             {
                 if (CustomPreProcessor == null)
-                    return Fail(string.IsNullOrWhiteSpace(result.Message) ? "I DON'T UNDERSTAND." : result.Message);
+                    return Fail(string.IsNullOrWhiteSpace(result.Message) ? Case(StandardAnswers.IdontUnderstand) : result.Message);
 
                 var preProcessorArguments = new PreProcessorArguments
                 {
@@ -66,7 +73,7 @@ namespace FlatEarthControlSystem
 
                 if (preProcessorArguments.Cancel)
                     return Fail(string.IsNullOrWhiteSpace(preProcessorArguments.CancelText)
-                        ? "I DON'T UNDERSTAND."
+                        ? Case(StandardAnswers.IdontUnderstand)
                         : preProcessorArguments.CancelText);
 
                 preProcessor = null;
@@ -82,7 +89,7 @@ namespace FlatEarthControlSystem
                 case PreProcessorIntention.Inventory:
                     break;
                 case PreProcessorIntention.Move:
-                    return Go(result.Result.Part2Noun);
+                    return Go(result.Result!.Part2Noun);
                 case PreProcessorIntention.Exits:
                     return GetExits();
                 default:
@@ -96,13 +103,13 @@ namespace FlatEarthControlSystem
             var room = GetCurrentRoom();
             var exit = room.GetDiscoveredExit(direction.StringRepresentation);
             if (exit == null)
-                return Fail("YOU CAN'T GO THAT WAY.");
+                return Fail(Case(StandardAnswers.YouCantGoThatWay));
             //TODO: Check conditions.
             room = Player.SetCurrentRoomId(exit.TargetRoomId, World);
             var roomDescription = room.GetDescription();
             return Success(
                 string.IsNullOrWhiteSpace(roomDescription)
-                    ? "OK."
+                    ? Case(StandardAnswers.Ok)
                     : roomDescription
             );
         }
@@ -135,5 +142,10 @@ namespace FlatEarthControlSystem
         
         private static CommandResult Success(string text) =>
             new CommandResult(true, text);
+
+        private string Case(string s) =>
+            Uppercase
+                ? s.ToUpper()
+                : s;
     }
 }

@@ -5,6 +5,7 @@ namespace FlatEarthControlSystem.WorldDefinition
 {
     public class Room
     {
+        internal World Parent { get; set; }
         private ExitList Exits { get; }
         public string Id { get; }
         public int VisitCount { get; set; }

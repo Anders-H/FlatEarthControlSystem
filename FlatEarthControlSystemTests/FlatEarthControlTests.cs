@@ -1,4 +1,5 @@
-﻿using FlatEarthControlSystem.ControlCommandParser.Words;
+﻿using System;
+using FlatEarthControlSystem.ControlCommandParser.Words;
 using FlatEarthControlSystem.WorldDefinition;
 using FlatEarthControlSystemTests.Common;
 using Xunit;
@@ -50,7 +51,7 @@ namespace FlatEarthControlSystemTests
 
             var response = flatEarth.GetExits();
             Assert.True(response.Success);
-            Assert.True(response.Text == "EXITS ARE: NORTH.");
+            Assert.True(string.Compare(response.Text, "EXITS ARE: NORTH.", StringComparison.CurrentCultureIgnoreCase) == 0);
             
             flatEarth.GetCurrentRoom().GetAnyExit("WEST").Discovered = true;
             response = flatEarth.GetExits();

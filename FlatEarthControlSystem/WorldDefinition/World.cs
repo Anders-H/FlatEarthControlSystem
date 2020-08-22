@@ -8,6 +8,8 @@ namespace FlatEarthControlSystem.WorldDefinition
     {
         private List<Room> Rooms { get; }
 
+        public bool Uppercase { get; set; }
+
         public World()
         {
             Rooms = new List<Room>();
@@ -20,8 +22,11 @@ namespace FlatEarthControlSystem.WorldDefinition
             Rooms.Exists(x =>
                 string.Compare(x.Id, id, StringComparison.CurrentCultureIgnoreCase) == 0);
 
-        public void AddRoom(Room room) =>
+        public void AddRoom(Room room)
+        {
+            room.Parent = this;
             Rooms.Add(room);
+        }
 
         public Room? GetRoom(string id) =>
             Rooms.FirstOrDefault(x => x.Id == id);
