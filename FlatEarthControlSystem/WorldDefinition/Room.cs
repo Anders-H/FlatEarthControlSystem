@@ -5,7 +5,7 @@ namespace FlatEarthControlSystem.WorldDefinition
 {
     public class Room
     {
-        internal World Parent { get; set; }
+        internal World? Parent { get; set; }
         private ExitList Exits { get; }
         public string Id { get; }
         public int VisitCount { get; set; }
@@ -28,10 +28,18 @@ namespace FlatEarthControlSystem.WorldDefinition
             return e;
         }
 
-        public string GetDescription() =>
-            VisitCount <= 1
+        public string GetDescription()
+        {
+            var uppercase = Parent?.Uppercase ?? false;
+            
+            var text = VisitCount <= 1
                 ? string.IsNullOrWhiteSpace(FirstEntryDescription) ? Description : FirstEntryDescription
                 : string.IsNullOrWhiteSpace(Description) ? FirstEntryDescription : Description;
+
+            return uppercase
+                ? text.ToUpper()
+                : text;
+        }
 
         public string GetLookText()
         {

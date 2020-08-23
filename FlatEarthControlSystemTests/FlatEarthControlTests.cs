@@ -35,13 +35,14 @@ namespace FlatEarthControlSystemTests
             
             var exit = currentRoom.GetAnyExit("WEST");
             Assert.True(exit != null);
-            exit.Discovered = true;
+            exit!.Discovered = true;
             
             Assert.True(currentRoom.CanGo(new Noun("NORTH"), out targetId));
             Assert.True(targetId == "5,4");
             Assert.True(currentRoom.CanGo(new Noun("WEST"), out targetId));
             Assert.True(targetId == "4,5");
             Assert.False(currentRoom.CanGo(new Noun("SOUTH"), out targetId));
+            Assert.True(string.IsNullOrWhiteSpace(targetId));
         }
         
         [Fact]
@@ -56,17 +57,17 @@ namespace FlatEarthControlSystemTests
             flatEarth.GetCurrentRoom().GetAnyExit("WEST").Discovered = true;
             response = flatEarth.GetExits();
             Assert.True(response.Success);
-            Assert.True(response.Text == "EXITS ARE: NORTH AND WEST.");
+            Assert.True(string.Compare(response.Text, "EXITS ARE: NORTH AND WEST.", StringComparison.CurrentCultureIgnoreCase) == 0);
 
             flatEarth.GetCurrentRoom().AddExit(new Exit("SOUTH", "5,4"));
             response = flatEarth.GetExits();
             Assert.True(response.Success);
-            Assert.True(response.Text == "EXITS ARE: NORTH, WEST AND SOUTH.");
+            Assert.True(string.Compare(response.Text, "EXITS ARE: NORTH, WEST AND SOUTH.", StringComparison.CurrentCultureIgnoreCase) == 0);
 
             flatEarth.GetCurrentRoom().AddExit(new Exit("EAST", "4,5"));
             response = flatEarth.GetExits();
             Assert.True(response.Success);
-            Assert.True(response.Text == "EXITS ARE: NORTH, WEST, SOUTH AND EAST.");
+            Assert.True(string.Compare(response.Text, "EXITS ARE: NORTH, WEST, SOUTH AND EAST.", StringComparison.CurrentCultureIgnoreCase) == 0);
         }
 
         [Fact]
