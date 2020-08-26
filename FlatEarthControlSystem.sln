@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlatEarthControlSystem", "F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlatEarthControlSystemTests", "FlatEarthControlSystemTests\FlatEarthControlSystemTests.csproj", "{134039EC-AF9B-4127-89D7-24ED0B65DC5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatEarthSimpleSampleGame", "FlatEarthSimpleSampleGame\FlatEarthSimpleSampleGame.csproj", "{7D0B61F7-0019-4575-9DDD-75A390061CD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlatEarthSimpleSampleGame", "FlatEarthSimpleSampleGame\FlatEarthSimpleSampleGame.csproj", "{7D0B61F7-0019-4575-9DDD-75A390061CD8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3989045F-320B-46DD-BE2F-C878CB24B03E}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

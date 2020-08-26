@@ -9,18 +9,16 @@ namespace FlatEarthSimpleSampleGame
         public static void Main()
         {
             var consumerUtils = new ConsumerUtils();
-            var worldDefinitionPath = Path.Combine(consumerUtils.GetHostDirectory(), @"world.txt");
             var flatEarth = new FlatEarth();
 
-            using (var sr = new StreamReader(worldDefinitionPath))
+            using (var sr = new StreamReader(Path.Combine(consumerUtils.GetHostDirectory(), @"world.txt")))
             {
                 var source = sr.ReadToEnd();
                 sr.Close();
                 flatEarth.Load(source);
             }
 
-            var room = flatEarth.GetCurrentRoom();
-            Console.WriteLine(room.GetDescription());
+            Console.WriteLine(flatEarth.GetCurrentRoom().GetDescription());
 
             do
             {
@@ -34,7 +32,6 @@ namespace FlatEarthSimpleSampleGame
                 }
 
                 var result = flatEarth.Do(input);
-                room = flatEarth.GetCurrentRoom();
                 Console.WriteLine(result.Text);
 
             } while (true);
@@ -44,7 +41,6 @@ namespace FlatEarthSimpleSampleGame
         {
             Console.Write("Exit? (Y/N) ");
             return (Console.ReadLine() ?? "").Trim().ToLower().StartsWith("y");
-
         }
     }
 }

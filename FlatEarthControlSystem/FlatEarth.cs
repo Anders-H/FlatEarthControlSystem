@@ -53,7 +53,7 @@ namespace FlatEarthControlSystem
             return room.GetDescription();
         }
 
-        public CommandResult? Do(string command)
+        public CommandResult Do(string command)
         {
             var result = new CommandParser(GetCurrentRoom(), command).Parse();
             var preProcessor = CustomPreProcessor;
@@ -87,7 +87,8 @@ namespace FlatEarthControlSystem
             switch (result.Intention)
             {
                 case PreProcessorIntention.Inventory:
-                    break;
+                    //TODO
+                    return null;
                 case PreProcessorIntention.Move:
                     return Go(result.Result!.Part2Noun);
                 case PreProcessorIntention.Exits:
@@ -95,7 +96,6 @@ namespace FlatEarthControlSystem
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            return null;
         }
 
         public CommandResult Go(Noun direction)

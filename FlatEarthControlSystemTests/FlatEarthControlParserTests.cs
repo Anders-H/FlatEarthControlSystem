@@ -1,4 +1,5 @@
 ﻿using System;
+using FlatEarthControlSystem.ControlCommandParser;
 using FlatEarthControlSystem.WorldDefinition;
 using FlatEarthControlSystemTests.Common;
 using Xunit;
@@ -66,6 +67,15 @@ namespace FlatEarthControlSystemTests
             Assert.True(flatEarth.Look().Text == "1-1");
             Assert.True(flatEarth.Look().Text == "1-2");
             Assert.True(flatEarth.Look().Text == "1-2");
+        }
+
+        [Fact]
+        public void CanIdentifyWordClasses()
+        {
+            var flatEarth = GetLookTestData();
+            var cp = new CommandParser(flatEarth.GetCurrentRoom(), "GO NORTH");
+            var cpr = cp.Parse();
+
         }
     }
 }
