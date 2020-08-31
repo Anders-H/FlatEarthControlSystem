@@ -19,6 +19,8 @@ namespace FlatEarthControlSystem
         
         public World World { get; private set; }
         public Player Player { get; private set; }
+        public WorldObjectList WorldObjects { get; }
+
 
         static FlatEarth()
         {
@@ -30,6 +32,7 @@ namespace FlatEarthControlSystem
         {
             World = new World();
             Player = new Player();
+            WorldObjects = new WorldObjectList();
             Uppercase = false;
         }
 
@@ -87,8 +90,7 @@ namespace FlatEarthControlSystem
             switch (result.Intention)
             {
                 case PreProcessorIntention.Inventory:
-                    //TODO
-                    return null;
+                    return Inventory();
                 case PreProcessorIntention.Move:
                     return Go(result.Result!.Part2Noun);
                 case PreProcessorIntention.Exits:
@@ -128,7 +130,12 @@ namespace FlatEarthControlSystem
                         .Where(x => x.Discovered)
                 ).ToString()
             );
-        
+
+        public CommandResult Inventory() =>
+            Player.Inventory.Empty()
+                ? new CommandResult(true, Phrases.YouAreNotCarryingAnything)
+                : new CommandResult(true, $"{Phrases.YouAreNotCarryingAnything}{Player.Inventory.EnumerationText}.");
+
         public Room GetCurrentRoom()
         {
             var currentRoom = World.GetRoom(Player.GetCurrentRoomId());

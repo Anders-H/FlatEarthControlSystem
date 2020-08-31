@@ -4,7 +4,13 @@ namespace FlatEarthControlSystem.WorldDefinition
 {
     public class Player
     {
-        private string _currentRoomId;
+        private string? _currentRoomId;
+        public Inventory Inventory { get; }
+
+        public Player()
+        {
+            Inventory = new Inventory();
+        }
 
         public string GetCurrentRoomId() =>
             _currentRoomId ?? "";
@@ -20,5 +26,7 @@ namespace FlatEarthControlSystem.WorldDefinition
             room.LookCount = 0;
             return room;
         }
+
+
     }
 }

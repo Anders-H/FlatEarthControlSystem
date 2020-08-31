@@ -5,7 +5,6 @@ namespace FlatEarthControlSystem.ControlCommandParser
 {
     public class CommandParserResult
     {
-        public const string GeneralErrorMessage = "I DON'T UNDERSTAND.";
         public bool Success { get; }
         public string? Message { get; }
         public SuggestedCommand? Result { get; }
@@ -35,6 +34,6 @@ namespace FlatEarthControlSystem.ControlCommandParser
             new CommandParserResult(false, message, null, null, null, null, null);
         
         internal static CommandParserResult CreateFailResult() =>
-            new CommandParserResult(false, GeneralErrorMessage, null, null, null, null, null);
+            new CommandParserResult(false, Phrases.IdontUnderstand, null, null, null, null, null);
     }
 }
