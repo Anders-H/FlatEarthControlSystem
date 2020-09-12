@@ -7,9 +7,9 @@ namespace FlatEarthControlSystem.WorldDefinition
         private string? _currentRoomId;
         public Inventory Inventory { get; }
 
-        public Player()
+        public Player(FlatEarth flatEarth)
         {
-            Inventory = new Inventory();
+            Inventory = new Inventory(flatEarth);
         }
 
         public string GetCurrentRoomId() =>
@@ -26,7 +26,5 @@ namespace FlatEarthControlSystem.WorldDefinition
             room.LookCount = 0;
             return room;
         }
-
-
     }
 }

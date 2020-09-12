@@ -1,6 +1,6 @@
 ﻿namespace FlatEarthControlSystem.WorldDefinition
 {
-    public class WorldObject
+    public class WorldObject : IReferenceable
     {
         public string UniqueName { get; }
         public string RelaxedName { get; }

@@ -31,8 +31,8 @@ namespace FlatEarthControlSystem
         public FlatEarth()
         {
             World = new World();
-            Player = new Player();
             WorldObjects = new WorldObjectList();
+            Player = new Player(this);
             Uppercase = false;
         }
 
@@ -46,7 +46,7 @@ namespace FlatEarthControlSystem
         {
             var worldParser = new WorldParser(data);
             World = worldParser.Parse(out var startRoomId);
-            Player = new Player();
+            Player = new Player(this);
             Player.SetCurrentRoomId(startRoomId, World);
         }
 
