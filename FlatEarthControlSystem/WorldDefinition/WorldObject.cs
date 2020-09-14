@@ -1,9 +1,7 @@
 ﻿namespace FlatEarthControlSystem.WorldDefinition
 {
-    public class WorldObject : IReferenceable
+    public class WorldObject : Referenceable
     {
-        public string UniqueName { get; }
-        public string RelaxedName { get; }
         public bool Discovered { get; set; }
         public bool WillDisposeAfterUse { get; }
         public bool Disposed { get; set; }
@@ -12,9 +10,8 @@
 
 
         public WorldObject(string uniqueName, string relaxedName, bool discovered, bool willDisposeAfterUse, string indefiniteArticle)
+            : base(uniqueName, relaxedName)
         {
-            UniqueName = uniqueName;
-            RelaxedName = relaxedName;
             Discovered = discovered;
             WillDisposeAfterUse = willDisposeAfterUse;
             Disposed = false;
@@ -23,9 +20,8 @@
         }
 
         public WorldObject(string uniqueName, string relaxedName, bool discovered, string indefiniteArticle)
+            : base(uniqueName, relaxedName)
         {
-            UniqueName = uniqueName;
-            RelaxedName = relaxedName;
             Discovered = discovered;
             WillDisposeAfterUse = false;
             Disposed = false;

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FlatEarthControlSystem;
+﻿using FlatEarthControlSystem;
 using FlatEarthControlSystem.WorldDefinition;
 using Xunit;
 
@@ -16,7 +13,7 @@ namespace FlatEarthControlSystemTests
 
             var i1 = new Inventory(flatEarth);
 
-            
+            //i1.AddWorldObject("Key", "");
         }
     }
 }

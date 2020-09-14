@@ -2,14 +2,11 @@
 
 namespace FlatEarthControlSystem
 {
-    public class ReferenceableList<T> : List<IReferenceable>
+    public class ReferenceableList<T> : List<Referenceable>
     {
         public string EnumerationText
         {
-            get
-            {
-
-            }
+            get { return ""; }
         }
     }
 }
