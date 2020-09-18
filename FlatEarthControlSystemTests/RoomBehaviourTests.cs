@@ -1,14 +1,15 @@
 ﻿using System;
 using FlatEarthControlSystem;
 using FlatEarthControlSystem.ControlCommandParser.Words;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatEarthControlSystemTests
 {
+    [TestClass]
     public class RoomBehaviourTests
     {
 
-        [Fact]
+        [TestMethod]
         public void CanAdjustDescriptionResponseFromVisitCount()
         {
             var flatEarth = new FlatEarth();
@@ -35,13 +36,13 @@ END ROOM
 
 CURRENT ROOM 1,1
 ");
-            Assert.True(flatEarth.GetCurrentRoom().GetDescription() == "1-1");
-            Assert.True(flatEarth.Go(new Noun("SOUTH")).Text == "2-1");
-            Assert.True(flatEarth.Go(new Noun("NORTH")).Text == "1-2");
-            Assert.True(flatEarth.Go(new Noun("SOUTH")).Text == "2-2");
+            Assert.IsTrue(flatEarth.GetCurrentRoom().GetDescription() == "1-1");
+            Assert.IsTrue(flatEarth.Go(new Noun("SOUTH")).Text == "2-1");
+            Assert.IsTrue(flatEarth.Go(new Noun("NORTH")).Text == "1-2");
+            Assert.IsTrue(flatEarth.Go(new Noun("SOUTH")).Text == "2-2");
         }
 
-        [Fact]
+        [TestMethod]
         public void CanAdjustLookResponseFromVisitCount()
         {
             var flatEarth = new FlatEarth();
@@ -68,20 +69,20 @@ END ROOM
 
 CURRENT ROOM 1,1
 ");
-            Assert.True(flatEarth.Look().Text == "1-1");
-            Assert.True(flatEarth.Look().Text == "1-2");
-            Assert.True(flatEarth.Look().Text == "1-2");
+            Assert.IsTrue(flatEarth.Look().Text == "1-1");
+            Assert.IsTrue(flatEarth.Look().Text == "1-2");
+            Assert.IsTrue(flatEarth.Look().Text == "1-2");
             flatEarth.Go(new Noun("SOUTH"));
-            Assert.True(flatEarth.Look().Text == "2-1");
-            Assert.True(flatEarth.Look().Text == "2-2");
-            Assert.True(flatEarth.Look().Text == "2-2");
+            Assert.IsTrue(flatEarth.Look().Text == "2-1");
+            Assert.IsTrue(flatEarth.Look().Text == "2-2");
+            Assert.IsTrue(flatEarth.Look().Text == "2-2");
             flatEarth.Go(new Noun("NORTH"));
-            Assert.True(flatEarth.Look().Text == "1-1");
-            Assert.True(flatEarth.Look().Text == "1-2");
-            Assert.True(flatEarth.Look().Text == "1-2");
+            Assert.IsTrue(flatEarth.Look().Text == "1-1");
+            Assert.IsTrue(flatEarth.Look().Text == "1-2");
+            Assert.IsTrue(flatEarth.Look().Text == "1-2");
         }
 
-        [Fact]
+        [TestMethod]
         public void CanGiveRoomDescriptionEvenWhenFirstDescriptionIsNotGiven()
         {
             var flatEarth = new FlatEarth();
@@ -100,10 +101,10 @@ END ROOM
 
 CURRENT ROOM 1,1
 ");
-            Assert.True(flatEarth.GetCurrentRoom().Description == "This is room 1,1");
-            Assert.True(string.IsNullOrEmpty(flatEarth.GetCurrentRoom().FirstEntryDescription));
+            Assert.IsTrue(flatEarth.GetCurrentRoom().Description == "This is room 1,1");
+            Assert.IsTrue(string.IsNullOrEmpty(flatEarth.GetCurrentRoom().FirstEntryDescription));
 
-            Assert.True(
+            Assert.IsTrue(
                 string.Compare(
                     "This is room 1,1",
                     flatEarth.GetCurrentRoom().GetDescription(),
@@ -113,7 +114,7 @@ CURRENT ROOM 1,1
 
             flatEarth.Go(new Noun("SOUTH"));
 
-            Assert.True(
+            Assert.IsTrue(
                 string.Compare(
                     "This is room 1,2",
                     flatEarth.GetCurrentRoom().GetDescription(),
@@ -122,7 +123,7 @@ CURRENT ROOM 1,1
             );
         }
 
-        [Fact]
+        [TestMethod]
         public void CanGiveRoomDescriptionEvenWhenOnlyFirstDescriptionIsGiven()
         {
             var flatEarth = new FlatEarth();
@@ -141,10 +142,10 @@ END ROOM
 
 CURRENT ROOM 1,1
 ");
-            Assert.True(string.IsNullOrEmpty(flatEarth.GetCurrentRoom().Description));
-            Assert.True(flatEarth.GetCurrentRoom().FirstEntryDescription == "This is room 1,1");
+            Assert.IsTrue(string.IsNullOrEmpty(flatEarth.GetCurrentRoom().Description));
+            Assert.IsTrue(flatEarth.GetCurrentRoom().FirstEntryDescription == "This is room 1,1");
 
-            Assert.True(
+            Assert.IsTrue(
                 string.Compare(
                     "This is room 1,1",
                     flatEarth.GetCurrentRoom().GetDescription(),
@@ -154,7 +155,7 @@ CURRENT ROOM 1,1
 
             flatEarth.Go(new Noun("SOUTH"));
 
-            Assert.True(
+            Assert.IsTrue(
                 string.Compare(
                     "This is room 1,2",
                     flatEarth.GetCurrentRoom().GetDescription(),

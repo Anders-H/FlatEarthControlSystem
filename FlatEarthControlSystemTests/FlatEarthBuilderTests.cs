@@ -1,12 +1,13 @@
 using FlatEarthControlSystem;
 using FlatEarthControlSystem.ControlCommandParser.Words;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatEarthControlSystemTests
 {
+    [TestClass]
     public class FlatEarthBuilderTests
     {
-        [Fact]
+        [TestMethod]
         public void WithoutUppercaseDeclarationGameIsMixedCase()
         {
             var flatEarth = new FlatEarth();
@@ -16,7 +17,7 @@ DESCRIPTION: You are in a room.
 END ROOM
 CURRENT ROOM 100,100
 ");
-            Assert.True(flatEarth.GetCurrentRoom().GetDescription() == "You are in a room.");
+            Assert.IsTrue(flatEarth.GetCurrentRoom().GetDescription() == "You are in a room.");
 
             flatEarth.Load(@"
 BEGIN ROOM 100,100
@@ -25,10 +26,10 @@ END ROOM
 CURRENT ROOM 100,100
 UPPERCASE
 ");
-            Assert.True(flatEarth.GetCurrentRoom().GetDescription() == "YOU ARE IN A ROOM.");
+            Assert.IsTrue(flatEarth.GetCurrentRoom().GetDescription() == "YOU ARE IN A ROOM.");
         }
 
-        [Fact]
+        [TestMethod]
         public void CanDoPaths()
         {
             var flatEarth = new FlatEarth();
@@ -45,25 +46,25 @@ END ROOM
 
 CURRENT ROOM 1,1
 ");
-            Assert.True(flatEarth.GetCurrentRoom().Id == "1,1");
-            Assert.True(flatEarth.World.RoomCount == 2);
-            Assert.True(flatEarth.World.GetRoom(0)!.Id == "1,1");
-            Assert.True(flatEarth.World.GetRoom(0)!
+            Assert.IsTrue(flatEarth.GetCurrentRoom().Id == "1,1");
+            Assert.IsTrue(flatEarth.World.RoomCount == 2);
+            Assert.IsTrue(flatEarth.World.GetRoom(0)!.Id == "1,1");
+            Assert.IsTrue(flatEarth.World.GetRoom(0)!
                 .CanGo(
                     new Noun("SOUTH"),
                     out var targetRoomId
                 )
             );
-            Assert.True(targetRoomId == "1,2");
-            Assert.True(flatEarth.World.GetRoom(1)!.Id == "1,2");
-            Assert.True(flatEarth.World.GetRoom(1)!
+            Assert.IsTrue(targetRoomId == "1,2");
+            Assert.IsTrue(flatEarth.World.GetRoom(1)!.Id == "1,2");
+            Assert.IsTrue(flatEarth.World.GetRoom(1)!
                 .CanGo(
                     new Noun("NORTH"),
                     out targetRoomId
                 )
             );
-            Assert.True(targetRoomId == "1,1");
-            Assert.False(flatEarth.World.GetRoom(1)!
+            Assert.IsTrue(targetRoomId == "1,1");
+            Assert.IsFalse(flatEarth.World.GetRoom(1)!
                 .CanGo(
                     new Noun("SOUTH"),
                     out _
@@ -71,7 +72,7 @@ CURRENT ROOM 1,1
             );
         }
         
-        [Fact]
+        [TestMethod]
         public void RoomInitialVisibility()
         {
             var flatEarth = new FlatEarth();
@@ -97,23 +98,23 @@ END ROOM
 CURRENT ROOM 5,5
 ");
             var currentRoom = flatEarth.GetCurrentRoom();
-            Assert.True(currentRoom.CanGo(new Noun("NORTH"), out var targetId));
-            Assert.True(targetId == "5,4");
-            Assert.False(currentRoom.CanGo(new Noun("WEST"), out targetId));
-            Assert.True(targetId == "4,5");
-            Assert.False(currentRoom.CanGo(new Noun("SOUTH"), out targetId));
-            Assert.True(string.IsNullOrWhiteSpace(targetId));
+            Assert.IsTrue(currentRoom.CanGo(new Noun("NORTH"), out var targetId));
+            Assert.IsTrue(targetId == "5,4");
+            Assert.IsFalse(currentRoom.CanGo(new Noun("WEST"), out targetId));
+            Assert.IsTrue(targetId == "4,5");
+            Assert.IsFalse(currentRoom.CanGo(new Noun("SOUTH"), out targetId));
+            Assert.IsTrue(string.IsNullOrWhiteSpace(targetId));
             
             var exit = currentRoom.GetDiscoveredExit("WEST");
-            Assert.True(exit == null);
+            Assert.IsTrue(exit == null);
             exit = currentRoom.GetAnyExit("WEST");
             exit.Discovered = true;
             
-            Assert.True(currentRoom.CanGo(new Noun("NORTH"), out targetId));
-            Assert.True(targetId == "5,4");
-            Assert.True(currentRoom.CanGo(new Noun("WEST"), out targetId));
-            Assert.True(targetId == "4,5");
-            Assert.False(currentRoom.CanGo(new Noun("SOUTH"), out targetId));
+            Assert.IsTrue(currentRoom.CanGo(new Noun("NORTH"), out targetId));
+            Assert.IsTrue(targetId == "5,4");
+            Assert.IsTrue(currentRoom.CanGo(new Noun("WEST"), out targetId));
+            Assert.IsTrue(targetId == "4,5");
+            Assert.IsFalse(currentRoom.CanGo(new Noun("SOUTH"), out targetId));
         }
     }
 }

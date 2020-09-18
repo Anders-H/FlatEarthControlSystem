@@ -1,60 +1,61 @@
 ﻿using FlatEarthControlSystem.WorldDefinition;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatEarthControlSystemTests
 {
+    [TestClass]
     public class WorldObjectTests
     {
-        [Fact]
+        [TestMethod]
         public void CanIdentifyObjectWithNames()
         {
-            var objectWithName1 = new WorldObject("X1", "X2", true, "a");
-            var objectWithName2 = new WorldObject("X3", "", true, "an");
-            var objectWithName3 = new WorldObject("", "X4", true, "a");
-            var objectWithoutName = new WorldObject("", "", true, "an");
-            Assert.True(objectWithName1.HasName);
-            Assert.True(objectWithName2.HasName);
-            Assert.True(objectWithName3.HasName);
-            Assert.False(objectWithoutName.HasName);
+            var objectWithName1 = new WorldObject("X1", "a", "X2", "a", true);
+            var objectWithName2 = new WorldObject("X3", "an", "", "", true);
+            var objectWithName3 = new WorldObject("", "", "X4", "a", true);
+            var objectWithoutName = new WorldObject("", "", "", "", true);
+            Assert.IsTrue(objectWithName1.HasName);
+            Assert.IsTrue(objectWithName2.HasName);
+            Assert.IsTrue(objectWithName3.HasName);
+            Assert.IsFalse(objectWithoutName.HasName);
         }
 
-        [Fact]
+        [TestMethod]
         public void CanIdentifyMultipleNames()
         {
-            var objectWithMultipleNames = new WorldObject("X1", "X2", true, "a");
-            var objectWithName1 = new WorldObject("X3", "", true, "an");
-            var objectWithName2 = new WorldObject("", "X4", true, "a");
-            var objectWithoutName = new WorldObject("", "", true, "an");
-            Assert.True(objectWithMultipleNames.ItemHasMultipleNames);
-            Assert.False(objectWithName1.ItemHasMultipleNames);
-            Assert.False(objectWithName2.ItemHasMultipleNames);
-            Assert.False(objectWithoutName.ItemHasMultipleNames);
+            var objectWithMultipleNames = new WorldObject("X1", "a", "X2", "a", true);
+            var objectWithName1 = new WorldObject("X3", "an", "", "", true);
+            var objectWithName2 = new WorldObject("", "", "X4", "a", true);
+            var objectWithoutName = new WorldObject("", "", "", "", true);
+            Assert.IsTrue(objectWithMultipleNames.ItemHasMultipleNames);
+            Assert.IsFalse(objectWithName1.ItemHasMultipleNames);
+            Assert.IsFalse(objectWithName2.ItemHasMultipleNames);
+            Assert.IsFalse(objectWithoutName.ItemHasMultipleNames);
         }
 
-        [Fact]
+        [TestMethod]
         public void CanGetMostUniqueName()
         {
-            var o1 = new WorldObject("X1", "X2", true, "a");
-            var o2 = new WorldObject("X3", "", true, "an");
-            var o3 = new WorldObject("", "X4", true, "a");
-            var o4 = new WorldObject("", "", true, "an");
-            Assert.True(o1.GetMostUniqueName() == "X1");
-            Assert.True(o2.GetMostUniqueName() == "X3");
-            Assert.True(o3.GetMostUniqueName() == "X4");
-            Assert.True(o4.GetMostUniqueName() == "");
+            var o1 = new WorldObject("X1", "a", "X2", "a", true);
+            var o2 = new WorldObject("X3", "an", "", "", true);
+            var o3 = new WorldObject("", "", "X4", "a", true);
+            var o4 = new WorldObject("", "", "", "", true);
+            Assert.IsTrue(o1.GetMostUniqueName() == "X1");
+            Assert.IsTrue(o2.GetMostUniqueName() == "X3");
+            Assert.IsTrue(o3.GetMostUniqueName() == "X4");
+            Assert.IsTrue(o4.GetMostUniqueName() == "");
         }
 
-        [Fact]
+        [TestMethod]
         public void CanGetMostRelaxedName()
         {
-            var o1 = new WorldObject("X1", "X2", true, "a");
-            var o2 = new WorldObject("X3", "", true, "an");
-            var o3 = new WorldObject("", "X4", true, "a");
-            var o4 = new WorldObject("", "", true, "an");
-            Assert.True(o1.GetMostRelaxedName() == "X2");
-            Assert.True(o2.GetMostRelaxedName() == "X3");
-            Assert.True(o3.GetMostRelaxedName() == "X4");
-            Assert.True(o4.GetMostRelaxedName() == "");
+            var o1 = new WorldObject("X1", "a", "X2", "a", true);
+            var o2 = new WorldObject("X3", "an", "", "", true);
+            var o3 = new WorldObject("", "", "X4", "a", true);
+            var o4 = new WorldObject("", "", "", "", true);
+            Assert.IsTrue(o1.GetMostRelaxedName() == "X2");
+            Assert.IsTrue(o2.GetMostRelaxedName() == "X3");
+            Assert.IsTrue(o3.GetMostRelaxedName() == "X4");
+            Assert.IsTrue(o4.GetMostRelaxedName() == "");
         }
     }
 }

@@ -1,13 +1,14 @@
 ﻿using FlatEarthControlSystem;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatEarthControlSystemTests
 {
+    [TestClass]
     public class StringTests
     {
-        [Theory]
-        [InlineData(" jag  är glad   ", "JAG ÄR GLAD")]
+        [DataRow(" jag  är glad   ", "JAG ÄR GLAD")]
+        [DataTestMethod]
         public void CanMiddletrimText(string input, string output) =>
-            Assert.True(output == input.MiddleTrim());
+            Assert.IsTrue(output == input.MiddleTrim());
     }
 }

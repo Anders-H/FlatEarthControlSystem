@@ -5,13 +5,23 @@ namespace FlatEarthControlSystem
     public class Referenceable
     {
         public string UniqueName { get; }
+
+        public string IndefiniteArticleForUniqueName { get; }
         
         public string RelaxedName { get; }
 
-        public Referenceable(string uniqueName, string relaxedName)
+        public string IndefiniteArticleForRelaxedName { get; }
+
+        public Referenceable(
+            string uniqueName,
+            string indefiniteArticleForUniqueName,
+            string relaxedName,
+            string indefiniteArticleForRelaxedName)
         {
             UniqueName = uniqueName;
+            IndefiniteArticleForUniqueName = indefiniteArticleForUniqueName;
             RelaxedName = relaxedName;
+            IndefiniteArticleForRelaxedName = indefiniteArticleForRelaxedName;
         }
 
         public bool HasName =>

@@ -15,13 +15,15 @@
             _objects.Count <= 0;
 
         public string EnumerationText =>
-            _objects.EnumerationText;
+            _objects.Count > 0
+                ? $"You are carrying {_objects.EnumerationText}."
+                : "You are no carrying anything.";
 
-        public void AddWorldObject(string uniqueName, string relaxedName, bool discovered, bool willDisposeAfterUse, string indefiniteArticle) =>
-            _objects.Add(new WorldObject(uniqueName, relaxedName, discovered, willDisposeAfterUse, indefiniteArticle));
+        public void AddWorldObject(string uniqueName, string indefiniteArticleForUniqueName, string relaxedName, string indefiniteArticleForRelaxedName, bool discovered, bool willDisposeAfterUse) =>
+            _objects.Add(new WorldObject(uniqueName, indefiniteArticleForUniqueName, relaxedName, indefiniteArticleForRelaxedName, discovered, willDisposeAfterUse));
 
-        public void AddWorldObject(string uniqueName, string relaxedName, bool discovered, string indefiniteArticle) =>
-            _objects.Add(new WorldObject(uniqueName, relaxedName, discovered, indefiniteArticle));
+        public void AddWorldObject(string uniqueName, string indefiniteArticleForUniqueName, string relaxedName, string indefiniteArticleForRelaxedName, bool discovered) =>
+            _objects.Add(new WorldObject(uniqueName, indefiniteArticleForUniqueName, relaxedName, indefiniteArticleForRelaxedName, discovered));
 
         public void AddWorldObject(WorldObject worldObject) =>
             _objects.Add(worldObject);

@@ -2,13 +2,14 @@
 using System.Linq;
 using FlatEarthControlSystem.PostProcessing;
 using FlatEarthControlSystem.PreProcessing;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatEarthControlSystemTests
 {
+    [TestClass]
     public class PrePostProcessorTests
     {
-        [Fact]
+        [TestMethod]
         public void PrePostProcessorIntentionRepresentation()
         {
             var preValues = Enum.GetValues(typeof(PreProcessorIntention)).Cast<PreProcessorIntention>()
@@ -20,13 +21,13 @@ namespace FlatEarthControlSystemTests
                 .ToList();
             
             foreach (var preValue in preValues)
-                Assert.Contains(postValues, x => x.ToString() == preValue.ToString());
+                Assert.IsTrue(postValues.Exists(x => x.ToString() == preValue.ToString()));
             
             foreach (var postValue in postValues)
-                Assert.Contains(postValues, x => x.ToString() == postValue.ToString());
+                Assert.IsTrue(postValues.Exists(x => x.ToString() == postValue.ToString()));
         }
 
-        [Fact]
+        [TestMethod]
         public void CanPassThroughBehaviour()
         {
             
