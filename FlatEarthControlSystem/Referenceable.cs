@@ -12,6 +12,8 @@ namespace FlatEarthControlSystem
 
         public string IndefiniteArticleForRelaxedName { get; }
 
+        public bool CanUseRelaxedName { get; set; }
+
         public Referenceable(
             string uniqueName,
             string indefiniteArticleForUniqueName,
@@ -42,5 +44,15 @@ namespace FlatEarthControlSystem
             string.IsNullOrWhiteSpace(RelaxedName)
                 ? UniqueName
                 : RelaxedName;
+
+        public string GetMostUniqueNameWithIndefiniteArticle() =>
+            string.IsNullOrWhiteSpace(UniqueName)
+                ? $"{IndefiniteArticleForRelaxedName} {RelaxedName}"
+                : $"{IndefiniteArticleForUniqueName} {UniqueName}";
+
+        public string GetMostRelaxedNameWithIndefiniteArticle() =>
+            string.IsNullOrWhiteSpace(RelaxedName)
+                ? $"{IndefiniteArticleForUniqueName} {UniqueName}"
+                : $"{IndefiniteArticleForRelaxedName} {RelaxedName}";
     }
 }

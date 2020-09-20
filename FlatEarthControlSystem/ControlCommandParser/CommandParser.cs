@@ -70,23 +70,17 @@ namespace FlatEarthControlSystem.ControlCommandParser
                         CommandShow, SpecialNounExits, "");
             }
 
-            switch (_parts.Count)
+            return _parts.Count switch
             {
-                case 0:
-                    return CommandParserResult.CreateFailResult();
-                case 1:
-                    switch (command)
-                    {
-                        case CommandGo:
-                            return Go();
-                        case CommandShow:
-                            return Show();
-                        default:
-                            return CommandParserResult.CreateFailResult();
-                    }
-                default:
-                    return CommandParserResult.CreateFailResult();
-            }
+                0 => CommandParserResult.CreateFailResult(),
+                1 => command switch
+                {
+                    CommandGo => Go(),
+                    CommandShow => Show(),
+                    _ => CommandParserResult.CreateFailResult()
+                },
+                _ => CommandParserResult.CreateFailResult()
+            };
         }
 
         private CommandParserResult Go()
@@ -96,7 +90,7 @@ namespace FlatEarthControlSystem.ControlCommandParser
             var direction = _parts[0];
             var exit = _room.GetDiscoveredExit(direction);
             return exit == null
-                ? CommandParserResult.CreateFailResult("CAN'T GO THAT WAY.")
+                ? CommandParserResult.CreateFailResult(Phrases.YouCantGoThatWay)
                 : CommandParserResult.CreateSuccessResult(
                     new SuggestedCommand(CommandGo, exit.ToString()),
                     PreProcessorIntention.Move,

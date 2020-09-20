@@ -7,7 +7,7 @@
 
         public Inventory(FlatEarth flatEarth)
         {
-            _flatEarth = new FlatEarth();
+            _flatEarth = flatEarth;
             _objects = new WorldObjectList();
         }
 

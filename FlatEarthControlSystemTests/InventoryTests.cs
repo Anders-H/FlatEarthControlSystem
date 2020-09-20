@@ -20,7 +20,9 @@ namespace FlatEarthControlSystemTests
         {
             var flatEarth = new FlatEarth();
             var i = new Inventory(flatEarth);
+
             i.AddWorldObject("fish", "a", "", "", true);
+            
             Assert.IsTrue(i.EnumerationText == "You are carrying a fish.");
         }
 
@@ -29,8 +31,10 @@ namespace FlatEarthControlSystemTests
         {
             var flatEarth = new FlatEarth();
             var i = new Inventory(flatEarth);
+            
             i.AddWorldObject("elf", "an", "dead elf", "a", true);
             i.AddWorldObject("elf", "an", "happy elf", "a", true);
+
             Assert.IsTrue(i.EnumerationText == "You are carrying a dead elf and a happy elf.");
         }
 
@@ -44,7 +48,7 @@ namespace FlatEarthControlSystemTests
             i1.AddWorldObject("skeleton key", "a", "key", "a", true);
             i1.AddWorldObject("elf", "an", "dead elf", "a", true);
 
-            Assert.IsTrue(i1.EnumerationText == "");
+            Assert.IsTrue(i1.EnumerationText == "You are carrying a golden key, a skeleton key and an elf.");
         }
     }
 }
