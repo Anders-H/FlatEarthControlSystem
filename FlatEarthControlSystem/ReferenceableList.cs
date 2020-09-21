@@ -38,7 +38,8 @@ namespace FlatEarthControlSystem
                 foreach (var item1 in this)
                 {
                     foreach (
-                        var item2 in this.Where(item2 => item1 != item2)
+                        var item2 in this
+                            .Where(item2 => item1 != item2)
                             .Where(item2 => !string.IsNullOrWhiteSpace(item1.RelaxedName) && string.Compare(item1.GetMostRelaxedName(), item2.GetMostRelaxedName(), StringComparison.CurrentCultureIgnoreCase) == 0)
                     )
                     {
@@ -47,19 +48,16 @@ namespace FlatEarthControlSystem
                     }
                 }
 
-                var strings = new List<string>();
-                foreach (var item in this)
-                {
-                    if (item.CanUseRelaxedName)
-                        strings.Add(item.GetMostRelaxedNameWithIndefiniteArticle());
-                    else
-                        strings.Add(item.GetMostUniqueNameWithIndefiniteArticle());
-                }
+                var strings = this.Select(
+                    item => item.CanUseRelaxedName
+                        ? item.GetMostRelaxedNameWithIndefiniteArticle()
+                        : item.GetMostUniqueNameWithIndefiniteArticle()
+                ).ToList();
 
                 var result = new StringBuilder();
                 for (var i = 0; i < strings.Count; i++)
                 {
-                    result.Append(this[i]);
+                    result.Append(strings[i]);
                     if (i < strings.Count - 2)
                         result.Append(", ");
                     else if (i == strings.Count - 2)

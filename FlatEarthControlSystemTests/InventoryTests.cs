@@ -46,7 +46,7 @@ namespace FlatEarthControlSystemTests
 
             i1.AddWorldObject("golden key", "a", "key", "a", true);
             i1.AddWorldObject("skeleton key", "a", "key", "a", true);
-            i1.AddWorldObject("elf", "an", "dead elf", "a", true);
+            i1.AddWorldObject("dead elf", "a", "elf", "an", true);
 
             Assert.IsTrue(i1.EnumerationText == "You are carrying a golden key, a skeleton key and an elf.");
         }
