@@ -67,4 +67,57 @@ flatEarth.Load(@"
 ");
 ```
 
-## Game definition language
+## World definition language
+
+The World definition language defines the rooms and the objects of the game.
+It consists individual lines with zero to one parameter.
+Some define blocks and some do not. Some are root level lines, some must reside in certain blocks.
+
+### Casing
+
+Games are mixed case unless `UPPERCASE` appears at root level.
+
+### Room definition
+
+Rooms are defined in blocks at root level.
+
+```
+BEGIN ROOM [room ID]
+
+...
+
+END ROOM
+```
+
+### Room texts
+
+Four different descriptions can be provided, all are optional. A text that is displayed at the first visit, a text that is displayed at any other visits to a room, a text that is displayed the first time the user looks and a text that is displayed any other time the user looks. These lines must occur in a `ROOM` block.
+
+```
+FIRST DESCRIPTION: Text...
+DESCRIPTION: Text...
+FIRST LOOK: Text...
+LOOK: Text...
+```
+
+`FIRST DESCRIPTION` and `DESCRIPTION` can fall back to each other, just as `FIRST LOOK` and `LOOK`.
+
+### Exits
+
+Exits are defined inside of a `ROOM` block. `direction` is the name of the exit and `target room ID` is a room that exits in the world definition.
+
+```
+BEGIN EXIT [direction]: [target room ID]
+…
+END EXIT
+```
+
+If an exit should be invisible and unusable, place `NOT DISCOVERED` between `BEGIN EXIT` and `END EXIT`.
+
+### Starting room
+
+World definitions must include a starting room. The ID of an existing room is required.
+
+```
+CURRENT ROOM [room ID]
+```
