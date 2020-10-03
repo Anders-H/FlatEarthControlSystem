@@ -2,9 +2,10 @@
 {
     public enum PreProcessorIntention
     {
-        Inventory,
-        Move,
         Exits,
+        Inventory,
+        Look,
+        Move,
         ParseFailed
     }
 }

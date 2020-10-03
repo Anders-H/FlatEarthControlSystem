@@ -1,44 +1,35 @@
-﻿using FlatEarthControlSystem.ControlCommandParser.Words;
+﻿using FlatEarthControlSystem.ControlCommandParser.WordTypes;
 
 namespace FlatEarthControlSystem.ControlCommandParser
 {
     public class SuggestedCommand
     {
-        public Verb Part1Verb { get; }
-        public Noun Part2Noun { get; }
-        public Preposition? Part3Preposition { get; }
-        public Verb? Part4Verb { get; }
+        public Verb Word01Verb { get; }
+
+        public Filler? Word02Filler { get; }
         
-        internal SuggestedCommand(string verb, string noun)
+        public Noun? Word03Noun { get; }
+        
+        public Preposition? Word04Preposition { get; }
+
+        public Filler? Word05Filler { get; }
+
+        public Noun? Word06Noun { get; }
+
+        public SuggestedCommand(Verb word01Verb, Filler? word02Filler, Noun? word03Noun, Preposition? word04Preposition, Filler? word05Filler, Noun? word06Noun)
         {
-            Part1Verb = FlatEarth.Verbs.TryGet(verb);
-            Part2Noun = new Noun(noun);
-            Part3Preposition = null;
-            Part4Verb = null;
+            Word01Verb = word01Verb;
+            Word02Filler = word02Filler;
+            Word03Noun = word03Noun;
+            Word04Preposition = word04Preposition;
+            Word05Filler = word05Filler;
+            Word06Noun = word06Noun;
         }
 
-        internal SuggestedCommand(Verb verb, Noun noun)
-        {
-            Part1Verb = verb;
-            Part2Noun = noun;
-            Part3Preposition = null;
-            Part4Verb = null;
-        }
+        public static SuggestedCommand Look() =>
+            new SuggestedCommand(Verb.Look(), null, null, null, null, null);
 
-        internal SuggestedCommand(string verb, string noun, string preposition, string secondVerb)
-        {
-            Part1Verb = FlatEarth.Verbs.TryGet(verb);
-            Part2Noun = new Noun(noun);
-            Part3Preposition = new Preposition(preposition);
-            Part4Verb = FlatEarth.Verbs.TryGet(secondVerb);
-        }
-
-        internal SuggestedCommand(Verb verb, Noun noun, Preposition preposition, Verb secondVerb)
-        {
-            Part1Verb = verb;
-            Part2Noun = noun;
-            Part3Preposition = preposition;
-            Part4Verb = secondVerb;
-        }
+        public static SuggestedCommand GoNorth() =>
+            new SuggestedCommand(Verb.Go(), null, Noun.North(), null, null, null);
     }
 }

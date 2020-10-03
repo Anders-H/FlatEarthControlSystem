@@ -5,16 +5,21 @@ namespace FlatEarthControlSystem.ControlCommandParser
 {
     public class CommandParserResult
     {
+        
         public bool Success { get; }
+        
         public string? Message { get; }
+        
         public SuggestedCommand? Result { get; }
+        
         public PreProcessorIntention? Intention { get; }
 
-        public string? Verb { get; }
-        public string? ActOnObject { get; }
-        public string? UsingObject { get; }
-
-        private CommandParserResult(bool success, string? message, SuggestedCommand? result, PreProcessorIntention? intention, string? verb, string? actOnObject, string? usingObject)
+        private CommandParserResult(
+            bool success,
+            string? message,
+            SuggestedCommand? result,
+            PreProcessorIntention? intention
+        )
         {
             Success = success;
             Message = message;
@@ -22,18 +27,15 @@ namespace FlatEarthControlSystem.ControlCommandParser
             Intention = intention;
             if (Success && !Intention.HasValue)
                 throw new ArgumentException("Missing intention.");
-            Verb = verb;
-            ActOnObject = actOnObject;
-            UsingObject = usingObject;
         }
 
-        internal static CommandParserResult CreateSuccessResult(SuggestedCommand result, PreProcessorIntention intention, string? verb, string? actOnObject, string? usingObject) =>
-            new CommandParserResult(true, null, result, intention, verb, actOnObject, usingObject);
+        internal static CommandParserResult CreateSuccessResult(SuggestedCommand result, PreProcessorIntention intention) =>
+            new CommandParserResult(true, null, result, intention);
         
         internal static CommandParserResult CreateFailResult(string message) =>
-            new CommandParserResult(false, message, null, null, null, null, null);
+            new CommandParserResult(false, message, null, null);
         
         internal static CommandParserResult CreateFailResult() =>
-            new CommandParserResult(false, Phrases.IdontUnderstand, null, null, null, null, null);
+            new CommandParserResult(false, Phrases.IdontUnderstand, null, null);
     }
 }

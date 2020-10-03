@@ -7,117 +7,43 @@ namespace FlatEarthControlSystem.ControlCommandParser
 {
     public class CommandParser
     {
-        private readonly Room _room;
-        private readonly string _phrase;
-        private readonly List<string> _parts;
+        private readonly World _world;
+        private readonly Room _currentRoom;
+        private readonly Inventory _inventory;
 
-        private const string CommandShow = "SHOW";
-        private const string SpecialNounInventory = "INVENTORY";
-        private const string SpecialNounExits = "EXITS";
-        private const string CommandGo = "GO";
-
-        public CommandParser(Room room, string phrase)
+        public CommandParser(World world, Room currentRoom, Inventory inventory)
         {
-            _room = room;
-            _phrase = phrase.MiddleTrim();
-            _parts = _phrase.Split(' ').ToList();
+            _world = world;
+            _currentRoom = currentRoom;
+            _inventory = inventory;
         }
 
-        public CommandParserResult Parse()
+        public CommandParserResult Parse(string commandString)
         {
-            if (string.IsNullOrWhiteSpace(_phrase) || _parts.Count <= 0)
-                return CommandParserResult.CreateFailResult("");
+            var singleCommandParserResult = GetSingleCommandParserResult(commandString);
+            if (singleCommandParserResult != null && singleCommandParserResult.Success)
+                return singleCommandParserResult;
 
-            var command = _parts.Pop();
-
-            //Check if shortcut or single word command is used.
-            switch (command)
-            {
-                case SpecialNounInventory:
-                case "INV":
-                    return CommandParserResult.CreateSuccessResult(
-                        new SuggestedCommand(CommandShow, "INVENTORY"),
-                        PreProcessorIntention.Inventory,
-                        CommandShow, SpecialNounInventory, "");
-                case "N":
-                case "NORTH":
-                    return CommandParserResult.CreateSuccessResult(
-                        new SuggestedCommand(CommandGo, "NORTH"),
-                        PreProcessorIntention.Move,
-                        CommandGo, "NORTH", "");
-                case "E":
-                case "EAST":
-                    return CommandParserResult.CreateSuccessResult(
-                        new SuggestedCommand(CommandGo, "EAST"),
-                        PreProcessorIntention.Move,
-                        CommandGo, "EAST", "");
-                case "S":
-                case "SOUTH":
-                    return CommandParserResult.CreateSuccessResult(
-                        new SuggestedCommand(CommandGo, "SOUTH"),
-                        PreProcessorIntention.Move,
-                        CommandGo, "SOUTH", "");
-                case "W":
-                case "WEST":
-                    return CommandParserResult.CreateSuccessResult(
-                        new SuggestedCommand(CommandGo, "WEST"),
-                        PreProcessorIntention.Move,
-                        CommandGo, "WEST", "");
-                case SpecialNounExits:
-                    return CommandParserResult.CreateSuccessResult(
-                        new SuggestedCommand(CommandShow, SpecialNounExits),
-                        PreProcessorIntention.Exits,
-                        CommandShow, SpecialNounExits, "");
-            }
-
-            return _parts.Count switch
-            {
-                0 => CommandParserResult.CreateFailResult(),
-                1 => command switch
-                {
-                    CommandGo => Go(),
-                    CommandShow => Show(),
-                    _ => CommandParserResult.CreateFailResult()
-                },
-                _ => CommandParserResult.CreateFailResult()
-            };
+            return null; //TODO!!!!
         }
 
-        private CommandParserResult Go()
+        private CommandParserResult? GetSingleCommandParserResult(string commandString)
         {
-            if (_parts.Count != 1)
-                return CommandParserResult.CreateFailResult();
-            var direction = _parts[0];
-            var exit = _room.GetDiscoveredExit(direction);
-            return exit == null
-                ? CommandParserResult.CreateFailResult(Phrases.YouCantGoThatWay)
-                : CommandParserResult.CreateSuccessResult(
-                    new SuggestedCommand(CommandGo, exit.ToString()),
-                    PreProcessorIntention.Move,
-                    CommandGo, direction, "");
-        }
+            var singleCommandRecognizer = new SingleCommandRecognizer(commandString);
+            if (singleCommandRecognizer.IsLook())
+                return CommandParserResult.CreateSuccessResult(
+                    SuggestedCommand.Look(),
+                    PreProcessorIntention.Look
+                );
+            if (singleCommandRecognizer.IsGoNorth())
+                return CommandParserResult.CreateSuccessResult(
+                    SuggestedCommand.GoNorth(),
+                    PreProcessorIntention.Move
+                );
 
-        private CommandParserResult Show()
-        {
-            const string error = "SHOW WHAT?";
-            var show = _parts.Pop();
-            if (string.IsNullOrWhiteSpace(show))
-                return CommandParserResult.CreateFailResult(error);
-            switch (show)
-            {
-                case SpecialNounInventory:
-                case "INV":
-                    return CommandParserResult.CreateSuccessResult(
-                        new SuggestedCommand(CommandShow, SpecialNounInventory),
-                        PreProcessorIntention.Inventory,
-                        CommandShow, SpecialNounInventory, "");
-                case SpecialNounExits:
-                    return CommandParserResult.CreateSuccessResult(
-                        new SuggestedCommand(CommandShow, SpecialNounExits),
-                        PreProcessorIntention.Exits,
-                        CommandShow, SpecialNounExits, "");
-            }
-            return CommandParserResult.CreateFailResult(error);
+
+
+            return null; //TODO!!!!
         }
     }
 }
