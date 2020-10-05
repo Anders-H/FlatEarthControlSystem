@@ -8,5 +8,8 @@
         {
             StringRepresentation = stringRepresentation;
         }
+
+        public override string ToString() =>
+            StringRepresentation;
     }
 }

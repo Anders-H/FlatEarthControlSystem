@@ -8,5 +8,8 @@
 
         public static Noun North() =>
             new Noun("NORTH");
+
+        public static Noun South() =>
+            new Noun("SOUTH");
     }
 }

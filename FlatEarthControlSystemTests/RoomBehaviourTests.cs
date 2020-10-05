@@ -1,6 +1,6 @@
 ﻿using System;
 using FlatEarthControlSystem;
-using FlatEarthControlSystem.ControlCommandParser.Words;
+using FlatEarthControlSystem.ControlCommandParser.WordTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatEarthControlSystemTests
@@ -72,11 +72,11 @@ CURRENT ROOM 1,1
             Assert.IsTrue(flatEarth.Look().Text == "1-1");
             Assert.IsTrue(flatEarth.Look().Text == "1-2");
             Assert.IsTrue(flatEarth.Look().Text == "1-2");
-            flatEarth.Go(new Noun("SOUTH"));
+            flatEarth.Go(Noun.South());
             Assert.IsTrue(flatEarth.Look().Text == "2-1");
             Assert.IsTrue(flatEarth.Look().Text == "2-2");
             Assert.IsTrue(flatEarth.Look().Text == "2-2");
-            flatEarth.Go(new Noun("NORTH"));
+            flatEarth.Go(Noun.North());
             Assert.IsTrue(flatEarth.Look().Text == "1-1");
             Assert.IsTrue(flatEarth.Look().Text == "1-2");
             Assert.IsTrue(flatEarth.Look().Text == "1-2");

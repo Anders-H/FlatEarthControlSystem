@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using FlatEarthControlSystem.ControlCommandParser;
+using FlatEarthControlSystem.ControlCommandParser.WordTypes;
 
 namespace FlatEarthControlSystem.WorldDefinition
 {
@@ -18,8 +19,10 @@ namespace FlatEarthControlSystem.WorldDefinition
             AddRange(exits);
         }
 
-        public Exit GetDiscoveredExit(string direction) =>
-            this.FirstOrDefault(x => x.Discovered && x.DirectionName == direction);
+        public Exit? GetDiscoveredExit(Direction direction) =>
+            this.FirstOrDefault(
+                x => x.Discovered && x.DirectionName == direction.ToString()
+            );
 
         public Exit GetAnyExit(string direction) =>
             this.FirstOrDefault(x => x.DirectionName == direction);

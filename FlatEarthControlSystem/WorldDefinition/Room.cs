@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using FlatEarthControlSystem.ControlCommandParser.Words;
+using FlatEarthControlSystem.ControlCommandParser.WordTypes;
 
 namespace FlatEarthControlSystem.WorldDefinition
 {
@@ -74,7 +74,7 @@ namespace FlatEarthControlSystem.WorldDefinition
         public void AddExit(string directionName, string targetRoomId) =>
             Exits.Add(new Exit(directionName, targetRoomId));
         
-        public Exit? GetDiscoveredExit(string directionName) =>
+        public Exit? GetDiscoveredExit(Direction directionName) =>
             Exits.GetDiscoveredExit(directionName);
 
         public Exit GetAnyExit(string directionName) =>
