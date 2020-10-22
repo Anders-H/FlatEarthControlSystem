@@ -2,6 +2,7 @@
 {
     public enum PreProcessorIntention
     {
+        Empty,
         Exits,
         Inventory,
         Look,

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using FlatEarthControlSystem.PreProcessing;
+﻿using FlatEarthControlSystem.PreProcessing;
 using FlatEarthControlSystem.WorldDefinition;
 
 namespace FlatEarthControlSystem.ControlCommandParser
@@ -20,30 +18,15 @@ namespace FlatEarthControlSystem.ControlCommandParser
 
         public CommandParserResult Parse(string commandString)
         {
-            var singleCommandParserResult = GetSingleCommandParserResult(commandString);
-            if (singleCommandParserResult != null && singleCommandParserResult.Success)
-                return singleCommandParserResult;
+            commandString = commandString
+                .MiddleTrim()
+                .OnlyBasicCharacters();
 
-            return null; //TODO!!!!
-        }
-
-        private CommandParserResult? GetSingleCommandParserResult(string commandString)
-        {
-            var singleCommandRecognizer = new SingleCommandRecognizer(commandString);
-            if (singleCommandRecognizer.IsLook())
-                return CommandParserResult.CreateSuccessResult(
-                    SuggestedCommand.Look(),
-                    PreProcessorIntention.Look
-                );
-            if (singleCommandRecognizer.IsGoNorth())
-                return CommandParserResult.CreateSuccessResult(
-                    SuggestedCommand.GoNorth(),
-                    PreProcessorIntention.Move
-                );
+            if (string.IsNullOrWhiteSpace(commandString))
+                return CommandParserResult.CreateEmptyResult();
 
 
 
-            return null; //TODO!!!!
         }
     }
 }

@@ -53,7 +53,7 @@ namespace FlatEarthControlSystem.WorldDefinition
 
         public bool CanGo(Noun direction, out string targetRoomId)
         {
-            var exit = Exits.FirstOrDefault(x => x.DirectionName == direction.StringRepresentation);
+            var exit = Exits.FirstOrDefault(x => x.DirectionName == direction.ToString());
             if (exit == null)
             {
                 targetRoomId = "";
@@ -73,12 +73,18 @@ namespace FlatEarthControlSystem.WorldDefinition
 
         public void AddExit(string directionName, string targetRoomId) =>
             Exits.Add(new Exit(directionName, targetRoomId));
-        
+
+        public Exit? GetDiscoveredExit(Noun directionName) =>
+            Exits.GetDiscoveredExit(Direction.FromNoun(directionName));
+
         public Exit? GetDiscoveredExit(Direction directionName) =>
             Exits.GetDiscoveredExit(directionName);
 
-        public Exit GetAnyExit(string directionName) =>
+        public Exit? GetAnyExit(string directionName) =>
             Exits.GetAnyExit(directionName);
+
+        public Exit? GetAnyExit(Noun direction) =>
+            Exits.GetAnyExit(direction.ToString());
 
         public ExitList GetDiscoveredExits() =>
             new ExitList(Exits.Where(x => x.Discovered));

@@ -26,13 +26,13 @@ namespace FlatEarthControlSystemTests
         public void CanSeeExits()
         {
             var flatEarth = GetRoomInitialVisibilityTestData();
-            flatEarth.GetCurrentRoom().GetAnyExit("WEST").Discovered = false;
+            flatEarth.GetCurrentRoom()!.GetAnyExit("WEST").Discovered = false;
 
             var response = flatEarth.Do("EXITS");
             Assert.IsTrue(response!.Success);
             Assert.IsTrue(string.Compare(response.Text, "EXITS ARE: NORTH.", StringComparison.CurrentCultureIgnoreCase) == 0);
             
-            flatEarth.GetCurrentRoom().GetAnyExit("WEST").Discovered = true;
+            flatEarth.GetCurrentRoom()!.GetAnyExit("WEST").Discovered = true;
             response = flatEarth.Do("EXITS");
             Assert.IsTrue(response!.Success);
             Assert.IsTrue(string.Compare(response.Text, "EXITS ARE: NORTH AND WEST.", StringComparison.CurrentCultureIgnoreCase) == 0);
@@ -57,25 +57,25 @@ namespace FlatEarthControlSystemTests
         public void CanAdjustLookResponseFromVisitCount()
         {
             var flatEarth = GetLookTestData();
-            Assert.IsTrue(flatEarth.Look().Text == "1-1");
-            Assert.IsTrue(flatEarth.Look().Text == "1-2");
-            Assert.IsTrue(flatEarth.Look().Text == "1-2");
+            Assert.IsTrue(flatEarth.Do("look").Text == "1-1");
+            Assert.IsTrue(flatEarth.Do("look").Text == "1-2");
+            Assert.IsTrue(flatEarth.Do("look").Text == "1-2");
             flatEarth.Do("GO SOUTH");
-            Assert.IsTrue(flatEarth.Look().Text == "2-1");
-            Assert.IsTrue(flatEarth.Look().Text == "2-2");
-            Assert.IsTrue(flatEarth.Look().Text == "2-2");
+            Assert.IsTrue(flatEarth.Do("look").Text == "2-1");
+            Assert.IsTrue(flatEarth.Do("look").Text == "2-2");
+            Assert.IsTrue(flatEarth.Do("look").Text == "2-2");
             flatEarth.Do("GO NORTH");
-            Assert.IsTrue(flatEarth.Look().Text == "1-1");
-            Assert.IsTrue(flatEarth.Look().Text == "1-2");
-            Assert.IsTrue(flatEarth.Look().Text == "1-2");
+            Assert.IsTrue(flatEarth.Do("look").Text == "1-1");
+            Assert.IsTrue(flatEarth.Do("look").Text == "1-2");
+            Assert.IsTrue(flatEarth.Do("look").Text == "1-2");
         }
 
         [TestMethod]
         public void CanIdentifyWordClasses()
         {
             var flatEarth = GetLookTestData();
-            var cp = new CommandParser(flatEarth.GetCurrentRoom(), "GO NORTH");
-            var cpr = cp.Parse();
+            //var cp = new CommandParser(flatEarth.GetCurrentRoom(), "GO NORTH");
+            //var cpr = cp.Parse();
 
         }
     }

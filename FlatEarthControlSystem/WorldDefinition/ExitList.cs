@@ -19,12 +19,14 @@ namespace FlatEarthControlSystem.WorldDefinition
             AddRange(exits);
         }
 
-        public Exit? GetDiscoveredExit(Direction direction) =>
-            this.FirstOrDefault(
-                x => x.Discovered && x.DirectionName == direction.ToString()
-            );
+        public Exit? GetDiscoveredExit(Direction? direction) =>
+            direction == null
+                ? null
+                : this.FirstOrDefault(
+                    x => x.Discovered && x.DirectionName == direction.ToString()
+                );
 
-        public Exit GetAnyExit(string direction) =>
+        public Exit? GetAnyExit(string direction) =>
             this.FirstOrDefault(x => x.DirectionName == direction);
 
         public override string ToString()

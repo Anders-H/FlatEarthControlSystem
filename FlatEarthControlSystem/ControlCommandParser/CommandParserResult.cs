@@ -37,5 +37,8 @@ namespace FlatEarthControlSystem.ControlCommandParser
         
         internal static CommandParserResult CreateFailResult() =>
             new CommandParserResult(false, Phrases.IdontUnderstand, null, null);
+
+        internal static CommandParserResult CreateEmptyResult() =>
+            new CommandParserResult(true, "", null, PreProcessorIntention.Empty);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using FlatEarthControlSystem;
-using FlatEarthControlSystem.ControlCommandParser.WordTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatEarthControlSystemTests
@@ -37,9 +36,9 @@ END ROOM
 CURRENT ROOM 1,1
 ");
             Assert.IsTrue(flatEarth.GetCurrentRoom().GetDescription() == "1-1");
-            Assert.IsTrue(flatEarth.Go(new Noun("SOUTH")).Text == "2-1");
-            Assert.IsTrue(flatEarth.Go(new Noun("NORTH")).Text == "1-2");
-            Assert.IsTrue(flatEarth.Go(new Noun("SOUTH")).Text == "2-2");
+            Assert.IsTrue(flatEarth.Do("go south").Text == "2-1");
+            Assert.IsTrue(flatEarth.Do("go north").Text == "1-2");
+            Assert.IsTrue(flatEarth.Do("go south").Text == "2-2");
         }
 
         [TestMethod]
@@ -51,6 +50,7 @@ BEGIN ROOM 1,1
 
    BEGIN EXIT SOUTH: 1,2
    END EXIT
+
 
    FIRST LOOK: 1-1
    LOOK: 1-2
@@ -69,17 +69,17 @@ END ROOM
 
 CURRENT ROOM 1,1
 ");
-            Assert.IsTrue(flatEarth.Look().Text == "1-1");
-            Assert.IsTrue(flatEarth.Look().Text == "1-2");
-            Assert.IsTrue(flatEarth.Look().Text == "1-2");
-            flatEarth.Go(Noun.South());
-            Assert.IsTrue(flatEarth.Look().Text == "2-1");
-            Assert.IsTrue(flatEarth.Look().Text == "2-2");
-            Assert.IsTrue(flatEarth.Look().Text == "2-2");
-            flatEarth.Go(Noun.North());
-            Assert.IsTrue(flatEarth.Look().Text == "1-1");
-            Assert.IsTrue(flatEarth.Look().Text == "1-2");
-            Assert.IsTrue(flatEarth.Look().Text == "1-2");
+            Assert.IsTrue(flatEarth.Do("look").Text == "1-1");
+            Assert.IsTrue(flatEarth.Do("look").Text == "1-2");
+            Assert.IsTrue(flatEarth.Do("look").Text == "1-2");
+            flatEarth.Do("go south");
+            Assert.IsTrue(flatEarth.Do("look").Text == "2-1");
+            Assert.IsTrue(flatEarth.Do("look").Text == "2-2");
+            Assert.IsTrue(flatEarth.Do("look").Text == "2-2");
+            flatEarth.Do("go north");
+            Assert.IsTrue(flatEarth.Do("look").Text == "1-1");
+            Assert.IsTrue(flatEarth.Do("look").Text == "1-2");
+            Assert.IsTrue(flatEarth.Do("look").Text == "1-2");
         }
 
         [TestMethod]
@@ -112,7 +112,7 @@ CURRENT ROOM 1,1
                 ) == 0
             );
 
-            flatEarth.Go(new Noun("SOUTH"));
+            flatEarth.Do("go south");
 
             Assert.IsTrue(
                 string.Compare(
@@ -153,7 +153,7 @@ CURRENT ROOM 1,1
                 ) == 0
             );
 
-            flatEarth.Go(new Noun("SOUTH"));
+            flatEarth.Do("go south");
 
             Assert.IsTrue(
                 string.Compare(
