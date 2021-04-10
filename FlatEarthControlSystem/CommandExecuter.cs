@@ -2,6 +2,7 @@
 using System.Linq;
 using FlatEarthControlSystem.ControlCommandParser;
 using FlatEarthControlSystem.ControlCommandParser.WordTypes;
+using FlatEarthControlSystem.ControlCommandParser.WordTypes.Nouns;
 using FlatEarthControlSystem.PreProcessing;
 using FlatEarthControlSystem.WorldDefinition;
 

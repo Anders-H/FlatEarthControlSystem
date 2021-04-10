@@ -1,5 +1,7 @@
-﻿using FlatEarthControlSystem.PreProcessing;
+﻿using FlatEarthControlSystem.ControlCommandParser.WordTypes.Nouns;
+using FlatEarthControlSystem.PreProcessing;
 using FlatEarthControlSystem.WorldDefinition;
+using MutableStringLibrary;
 
 namespace FlatEarthControlSystem.ControlCommandParser
 {
@@ -18,15 +20,38 @@ namespace FlatEarthControlSystem.ControlCommandParser
 
         public CommandParserResult Parse(string commandString)
         {
-            commandString = commandString
-                .MiddleTrim()
-                .OnlyBasicCharacters();
+            var s = new MutableString(commandString);
+            s.Modify.MiddleTrim();
+            commandString = s.Value!.OnlyBasicCharacters();
 
             if (string.IsNullOrWhiteSpace(commandString))
                 return CommandParserResult.CreateEmptyResult();
 
+            if (commandString.IsSingleWord())
+                return ParseSingleWordCommand(commandString);
 
+            return null;
 
+        }
+
+        private CommandParserResult ParseSingleWordCommand(string s)
+        {
+            var direction = Direction.FromNoun(s);
+            if (direction != null)
+                return CommandParserResult.CreateSuccessResult(
+                    SuggestedCommand.Go(direction),
+                    PreProcessorIntention.Move
+                );
+
+            var command = SingleAction.FromNoun(s);
+            if (command != null)
+                return CommandParserResult.CreateSuccessResult(
+                    command,
+                    PreProcessorIntention.Empty //TODO!
+                );
+
+            return null;
+            
         }
     }
 }

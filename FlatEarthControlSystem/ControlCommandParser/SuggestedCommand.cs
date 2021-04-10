@@ -1,4 +1,5 @@
 ﻿using FlatEarthControlSystem.ControlCommandParser.WordTypes;
+using FlatEarthControlSystem.ControlCommandParser.WordTypes.Nouns;
 
 namespace FlatEarthControlSystem.ControlCommandParser
 {
@@ -26,10 +27,7 @@ namespace FlatEarthControlSystem.ControlCommandParser
             Word06Noun = word06Noun;
         }
 
-        public static SuggestedCommand Look() =>
-            new SuggestedCommand(Verb.Look(), null, null, null, null, null);
-
-        public static SuggestedCommand GoNorth() =>
-            new SuggestedCommand(Verb.Go(), null, Noun.North(), null, null, null);
+        public static SuggestedCommand Go(Direction direction) =>
+            new SuggestedCommand(Verb.Go(), null, direction, null, null, null);
     }
 }

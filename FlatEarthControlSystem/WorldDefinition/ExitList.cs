@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 using FlatEarthControlSystem.ControlCommandParser;
-using FlatEarthControlSystem.ControlCommandParser.WordTypes;
+using FlatEarthControlSystem.ControlCommandParser.WordTypes.Nouns;
 
 namespace FlatEarthControlSystem.WorldDefinition
 {

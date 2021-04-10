@@ -1,4 +1,5 @@
 ﻿using FlatEarthControlSystem.ControlCommandParser.WordTypes;
+using FlatEarthControlSystem.ControlCommandParser.WordTypes.Nouns;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatEarthControlSystemTests
