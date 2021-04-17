@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using MutableStringLibrary;
 
 namespace FlatEarthControlSystem
 {
@@ -7,15 +6,9 @@ namespace FlatEarthControlSystem
     {
         public static string OnlyBasicCharacters(this string me)
         {
-            if (string.IsNullOrWhiteSpace(me))
-                return "";
-            
-            var result = new StringBuilder();
-
-            foreach (var c in me.Where(c => "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".IndexOf(c) >= 0))
-                result.Append(c);
-            
-            return result.ToString();
+            var mutable = new MutableString(me);
+            mutable.Modify.LimitToCharacters("ABCDEFGHIJKLMNOPQRSTUVWXY Z0123456789");
+            return mutable.Value ?? "";
         }
 
         public static bool IsSingleWord(this string me) =>
