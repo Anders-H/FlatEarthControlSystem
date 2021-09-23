@@ -6,7 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MutableStringLibrary" Version="1.0.1" />
+      <PackageReference Include="MutableStringLibrary" Version="1.0.8" />
+      <PackageReference Include="TextAdventureGameInputParser" Version="1.0.0" />
     </ItemGroup>
 
 </Project>

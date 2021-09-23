@@ -1,4 +1,5 @@
-﻿using MutableStringLibrary;
+﻿using System;
+using MutableStringLibrary;
 
 namespace FlatEarthControlSystem
 {
@@ -13,5 +14,8 @@ namespace FlatEarthControlSystem
 
         public static bool IsSingleWord(this string me) =>
             me.IndexOf(' ') < 0;
+
+        public static bool Is(this string? me, string? other) =>
+            string.Compare(me, other, StringComparison.CurrentCultureIgnoreCase) == 0;
     }
 }

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
-using FlatEarthControlSystem.ControlCommandParser;
-using FlatEarthControlSystem.ControlCommandParser.WordTypes;
-using FlatEarthControlSystem.ControlCommandParser.WordTypes.Nouns;
 using FlatEarthControlSystem.PreProcessing;
 using FlatEarthControlSystem.WorldDefinition;
+using TextAdventureGameInputParser;
+using TextAdventureGameInputParser.WordClass;
 
 namespace FlatEarthControlSystem
 {
@@ -23,6 +22,23 @@ namespace FlatEarthControlSystem
             _uppercase = uppercase;
         }
 
+        // New version
+        public CommandResult Apply(Sentence sentence)
+        {
+            if (sentence.Word1Is(Words.Inventory))
+            {
+                Inventory();
+            }
+            else if (sentence.Word1Is(Words.Go))
+            {
+                return sentence.Word4IsEmpty()
+                    ? Fail(StandardAnswers.GoWhere)
+                    : Go(sentence.Word4);
+            }
+        }
+
+
+        // Old version
         public CommandResult Apply(CommandParserResult result) =>
             result.Intention switch
             {
@@ -32,11 +48,8 @@ namespace FlatEarthControlSystem
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-        public CommandResult Go(Noun? direction)
+        public CommandResult Go(Noun direction)
         {
-            if (direction == null)
-                return Fail(StandardAnswers.YouCantGoThatWay);
-
             var dir = Direction.FromNoun(direction);
 
             if (dir == null)
