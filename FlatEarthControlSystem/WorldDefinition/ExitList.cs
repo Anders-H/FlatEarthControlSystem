@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FlatEarthControlSystem.ControlCommandParser;
-using FlatEarthControlSystem.ControlCommandParser.WordTypes.Nouns;
 
 namespace FlatEarthControlSystem.WorldDefinition
 {
     public class ExitList : List<Exit>
     {
-        protected Room Parent { get; set; }
+        protected Room? Parent { get; set; }
 
         public ExitList()
         {
@@ -19,7 +17,7 @@ namespace FlatEarthControlSystem.WorldDefinition
             AddRange(exits);
         }
 
-        public Exit? GetDiscoveredExit(Direction? direction) =>
+        public Exit? GetDiscoveredExit(string? direction) =>
             direction == null
                 ? null
                 : this.FirstOrDefault(

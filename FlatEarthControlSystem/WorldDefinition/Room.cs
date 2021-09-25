@@ -1,6 +1,5 @@
 ﻿using System.Linq;
-using FlatEarthControlSystem.ControlCommandParser.WordTypes;
-using FlatEarthControlSystem.ControlCommandParser.WordTypes.Nouns;
+using TextAdventureGameInputParser.WordClass;
 
 namespace FlatEarthControlSystem.WorldDefinition
 {
@@ -76,10 +75,7 @@ namespace FlatEarthControlSystem.WorldDefinition
             Exits.Add(new Exit(directionName, targetRoomId));
 
         public Exit? GetDiscoveredExit(Noun directionName) =>
-            Exits.GetDiscoveredExit(Direction.FromNoun(directionName));
-
-        public Exit? GetDiscoveredExit(Direction directionName) =>
-            Exits.GetDiscoveredExit(directionName);
+            Exits.GetDiscoveredExit(directionName.Value);
 
         public Exit? GetAnyExit(string directionName) =>
             Exits.GetAnyExit(directionName);

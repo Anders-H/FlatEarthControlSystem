@@ -1,8 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using FlatEarthControlSystem.ControlCommandParser;
-using FlatEarthControlSystem.ControlCommandParser.WordTypes;
 using FlatEarthControlSystem.PostProcessing;
 using FlatEarthControlSystem.PreProcessing;
 using FlatEarthControlSystem.WorldDefinition;
@@ -97,7 +93,7 @@ namespace FlatEarthControlSystem
                 Uppercase
             );
 
-            return executer.Apply(result);
+            return executer.Apply(result.Sentence);
         }
 
         public Room GetCurrentRoom()

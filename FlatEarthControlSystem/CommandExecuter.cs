@@ -22,40 +22,28 @@ namespace FlatEarthControlSystem
             _uppercase = uppercase;
         }
 
-        // New version
         public CommandResult Apply(Sentence sentence)
         {
             if (sentence.Word1Is(Words.Inventory))
             {
-                Inventory();
+                return Inventory();
             }
             else if (sentence.Word1Is(Words.Go))
             {
                 return sentence.Word4IsEmpty()
                     ? Fail(StandardAnswers.GoWhere)
-                    : Go(sentence.Word4);
+                    : Go(sentence.Word4!);
             }
-        }
-
-
-        // Old version
-        public CommandResult Apply(CommandParserResult result) =>
-            result.Intention switch
+            else if (sentence.Word1Is(Words.Exits))
             {
-                PreProcessorIntention.Inventory => Inventory(),
-                PreProcessorIntention.Move => Go(result.Result?.Word03Noun),
-                PreProcessorIntention.Exits => GetExits(),
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                return GetExits();
+            }
+            throw new ArgumentOutOfRangeException();
+        }
 
         public CommandResult Go(Noun direction)
         {
-            var dir = Direction.FromNoun(direction);
-
-            if (dir == null)
-                return Fail(StandardAnswers.YouCantGoThatWay);
-
-            var exit = _currentRoom.GetDiscoveredExit(dir);
+            var exit = _currentRoom.GetDiscoveredExit(direction);
             if (exit == null)
                 return Fail(Case(StandardAnswers.YouCantGoThatWay));
 

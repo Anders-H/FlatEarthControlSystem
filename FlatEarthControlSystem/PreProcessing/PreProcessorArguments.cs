@@ -1,6 +1,4 @@
-﻿using FlatEarthControlSystem.ControlCommandParser;
-
-namespace FlatEarthControlSystem.PreProcessing
+﻿namespace FlatEarthControlSystem.PreProcessing
 {
     public class PreProcessorArguments
     {
@@ -8,6 +6,17 @@ namespace FlatEarthControlSystem.PreProcessing
         public bool Cancel { get; set; }
         public string CancelText { get; set; }
         public PreProcessorIntention PreProcessorIntention { get; internal set; }
-        public SuggestedCommand SuggestedCommand { get; set; }
+
+        public PreProcessorArguments() : this("", false, "", PreProcessorIntention.Empty)
+        {
+        }
+
+        public PreProcessorArguments(string sourceText, bool cancel, string cancelText, PreProcessorIntention preProcessorIntention)
+        {
+            SourceText = sourceText;
+            Cancel = cancel;
+            CancelText = cancelText;
+            PreProcessorIntention = preProcessorIntention;
+        }
     }
 }
