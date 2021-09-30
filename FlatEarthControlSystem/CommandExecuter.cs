@@ -12,14 +12,12 @@ namespace FlatEarthControlSystem
         private readonly World _world;
         private readonly Player _player;
         private readonly Room _currentRoom;
-        private readonly bool _uppercase;
 
-        public CommandExecuter(Player player, World world, Room currentRoom, bool uppercase)
+        public CommandExecuter(Player player, World world, Room currentRoom)
         {
             _player = player;
             _world = world;
             _currentRoom = currentRoom;
-            _uppercase = uppercase;
         }
 
         public CommandResult Apply(Sentence sentence)
@@ -45,7 +43,7 @@ namespace FlatEarthControlSystem
         {
             var exit = _currentRoom.GetDiscoveredExit(direction);
             if (exit == null)
-                return Fail(Case(StandardAnswers.YouCantGoThatWay));
+                return Fail(StandardAnswers.YouCantGoThatWay);
 
             //TODO: Check conditions.
 
@@ -54,7 +52,7 @@ namespace FlatEarthControlSystem
 
             return Success(
                 string.IsNullOrWhiteSpace(roomDescription)
-                    ? Case(StandardAnswers.Ok)
+                    ? StandardAnswers.Ok
                     : roomDescription
             );
         }
@@ -83,10 +81,5 @@ namespace FlatEarthControlSystem
 
         private static CommandResult Success(string text) =>
             new CommandResult(true, text);
-
-        private string Case(string s) =>
-            _uppercase
-                ? s.ToUpper()
-                : s;
     }
 }

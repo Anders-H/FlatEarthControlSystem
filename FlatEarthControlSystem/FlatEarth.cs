@@ -25,13 +25,6 @@ namespace FlatEarthControlSystem
             World = new World();
             WorldObjects = new WorldObjectList();
             Player = new Player(this);
-            Uppercase = false;
-        }
-
-        public bool Uppercase
-        {
-            get => World.Uppercase;
-            set => World.Uppercase = value;
         }
 
         public void Load(string data)
@@ -63,7 +56,7 @@ namespace FlatEarthControlSystem
             if (!result.Success)
             {
                 if (CustomPreProcessor == null)
-                    return Fail(string.IsNullOrWhiteSpace(result.Message) ? Case(StandardAnswers.IdontUnderstand) : result.Message);
+                    return Fail(string.IsNullOrWhiteSpace(result.Message) ? StandardAnswers.IdontUnderstand : result.Message);
 
                 var preProcessorArguments = new PreProcessorArguments
                 {
@@ -75,7 +68,7 @@ namespace FlatEarthControlSystem
 
                 if (preProcessorArguments.Cancel)
                     return Fail(string.IsNullOrWhiteSpace(preProcessorArguments.CancelText)
-                        ? Case(StandardAnswers.IdontUnderstand)
+                        ? StandardAnswers.IdontUnderstand
                         : preProcessorArguments.CancelText);
 
                 preProcessor = null;
@@ -89,8 +82,7 @@ namespace FlatEarthControlSystem
             var executer = new CommandExecuter(
                 Player,
                 World,
-                currentRoom,
-                Uppercase
+                currentRoom
             );
 
             return executer.Apply(result.Sentence);
@@ -106,10 +98,5 @@ namespace FlatEarthControlSystem
 
         private static CommandResult Fail(string text) =>
             new CommandResult(false, text);
-
-        private string Case(string s) =>
-            Uppercase
-                ? s.ToUpper()
-                : s;
     }
 }

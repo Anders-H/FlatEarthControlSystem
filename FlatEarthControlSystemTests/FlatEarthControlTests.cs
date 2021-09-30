@@ -1,8 +1,8 @@
 ﻿using System;
-using FlatEarthControlSystem.ControlCommandParser.WordTypes;
 using FlatEarthControlSystem.WorldDefinition;
 using FlatEarthControlSystemTests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TextAdventureGameInputParser.WordClass;
 
 namespace FlatEarthControlSystemTests
 {

@@ -73,10 +73,6 @@ The World definition language defines the rooms and the objects of the game.
 It consists individual lines with zero to one parameter.
 Some define blocks and some do not. Some are root level lines, some must reside in certain blocks.
 
-### Casing
-
-Games are mixed case unless `UPPERCASE` appears at root level.
-
 ### Room definition
 
 Rooms are defined in blocks at root level.

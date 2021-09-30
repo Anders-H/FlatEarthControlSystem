@@ -1,34 +1,12 @@
 using FlatEarthControlSystem;
-using FlatEarthControlSystem.ControlCommandParser.WordTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TextAdventureGameInputParser.WordClass;
 
 namespace FlatEarthControlSystemTests
 {
     [TestClass]
     public class FlatEarthBuilderTests
     {
-        [TestMethod]
-        public void WithoutUppercaseDeclarationGameIsMixedCase()
-        {
-            var flatEarth = new FlatEarth();
-            flatEarth.Load(@"
-BEGIN ROOM 100,100
-DESCRIPTION: You are in a room.
-END ROOM
-CURRENT ROOM 100,100
-");
-            Assert.IsTrue(flatEarth.GetCurrentRoom().GetDescription() == "You are in a room.");
-
-            flatEarth.Load(@"
-BEGIN ROOM 100,100
-DESCRIPTION: You are in a room.
-END ROOM
-CURRENT ROOM 100,100
-UPPERCASE
-");
-            Assert.IsTrue(flatEarth.GetCurrentRoom().GetDescription() == "YOU ARE IN A ROOM.");
-        }
-
         [TestMethod]
         public void CanDoPaths()
         {
