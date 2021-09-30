@@ -24,20 +24,20 @@ namespace FlatEarthControlSystem
 
         public CommandResult Apply(Sentence sentence)
         {
-            if (sentence.Word1Is(Words.Inventory))
-            {
-                return Inventory();
-            }
-            else if (sentence.Word1Is(Words.Go))
-            {
+            if (sentence.Word1Is(Words.Exits))
+                return GetExits();
+
+            if (sentence.Word1Is(Words.Go))
                 return sentence.Word4IsEmpty()
                     ? Fail(StandardAnswers.GoWhere)
                     : Go(sentence.Word4!);
-            }
-            else if (sentence.Word1Is(Words.Exits))
-            {
-                return GetExits();
-            }
+
+            if (sentence.Word1Is(Words.Inventory))
+                return Inventory();
+
+            if (sentence.Word1Is(Words.Look))
+                return Look();
+
             throw new ArgumentOutOfRangeException();
         }
 
