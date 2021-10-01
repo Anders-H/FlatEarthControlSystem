@@ -24,8 +24,6 @@ namespace FlatEarthControlSystem.WorldDefinitionParser
                 )
                 .ToList();
 
-            const string uppercase = "UPPERCASE";
-
             const string currentRoom = "CURRENT ROOM ";
             
             const string beginRoom = "BEGIN ROOM ";
@@ -49,12 +47,6 @@ namespace FlatEarthControlSystem.WorldDefinitionParser
             {
                 var row = rows[0].Trim();
                 rows.RemoveAt(0);
-
-                if (row == uppercase)
-                {
-                    world.Uppercase = true;
-                    continue;
-                }
 
                 if (row.StartsWith(currentRoom))
                 {

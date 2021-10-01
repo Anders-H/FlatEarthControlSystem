@@ -17,5 +17,8 @@ namespace FlatEarthControlSystem
 
         public static bool Is(this string? me, string? other) =>
             string.Compare(me, other, StringComparison.CurrentCultureIgnoreCase) == 0;
+
+        public static bool IsEmpty(this string? me) =>
+            string.IsNullOrWhiteSpace(me);
     }
 }

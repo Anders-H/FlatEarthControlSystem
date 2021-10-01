@@ -14,10 +14,18 @@ namespace FlatEarthControlSystem.WorldDefinition
         public int LookCount { get; set; }
         public string FirstLook { get; set; }
         public string Look { get; set; }
-        
-        public Room(string id)
+
+        public Room(string id) : this(id, "", "", "", "")
+        {
+        }
+
+        public Room(string id, string firstEntryDescription, string description, string firstLook, string look)
         {
             Id = id;
+            FirstEntryDescription = firstEntryDescription;
+            Description = description;
+            FirstLook = firstLook;
+            Look = look;
             Exits = new ExitList();
         }
 
@@ -28,27 +36,31 @@ namespace FlatEarthControlSystem.WorldDefinition
             return e;
         }
 
-        public string GetDescription()
-        {
-            var uppercase = Parent?.Uppercase ?? false;
-            
-            var text = VisitCount <= 1
-                ? string.IsNullOrWhiteSpace(FirstEntryDescription) ? Description : FirstEntryDescription
-                : string.IsNullOrWhiteSpace(Description) ? FirstEntryDescription : Description;
-
-            return uppercase
-                ? text.ToUpper()
-                : text;
-        }
+        public string GetDescription() =>
+            (
+                (
+                    VisitCount <= 1
+                    ? FirstEntryDescription.IsEmpty() ? Description : FirstEntryDescription
+                    : Description.IsEmpty() ? FirstEntryDescription : Description
+                )
+                ?? ""
+            ).ToUpper();
 
         public string GetLookText()
         {
             LookCount++;
-            return LookCount <= 1
-                ? string.IsNullOrWhiteSpace(FirstLook) ? Look : FirstLook
-                : string.IsNullOrWhiteSpace(Look)
+
+            var result = LookCount <= 1
+                ? FirstLook.IsEmpty() ? Look : FirstLook
+                : Look.IsEmpty()
                     ? FirstLook
                     : Look;
+
+            return (
+                result.IsEmpty()
+                    ? Description.IsEmpty() ? FirstEntryDescription : Description
+                    : result
+                ) ?? "";
         }
 
         public bool CanGo(Noun direction, out string targetRoomId)

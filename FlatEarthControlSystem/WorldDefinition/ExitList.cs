@@ -30,11 +30,11 @@ namespace FlatEarthControlSystem.WorldDefinition
         public override string ToString()
         {
             var result = new StringBuilder();
-            result.Append(Case(StandardAnswers.ExitsAre));
+            result.Append(StandardAnswers.ExitsAre);
             switch (Count)
             {
                 case 0:
-                    result.Append(Case(StandardAnswers.None));
+                    result.Append(StandardAnswers.None);
                     break;
                 case 1:
                     result.Append(this.First());
@@ -42,7 +42,7 @@ namespace FlatEarthControlSystem.WorldDefinition
                     break;
                 case 2:
                     result.Append(this.First());
-                    result.Append(Case(StandardAnswers.And));
+                    result.Append(StandardAnswers.And);
                     result.Append(this.Last());
                     result.Append(".");
                     break;
@@ -51,7 +51,7 @@ namespace FlatEarthControlSystem.WorldDefinition
                     for (var i = 0; i < Count; i++)
                     {
                         if (i == Count - 2)
-                            result.Append($"{this[i]}{Case(StandardAnswers.And)}");
+                            result.Append($"{this[i]}{StandardAnswers.And}");
                         else if (i == Count - 1)
                             result.Append($"{this[i]}.");
                         else
@@ -62,15 +62,6 @@ namespace FlatEarthControlSystem.WorldDefinition
             return result
                 .ToString()
                 .Trim();
-        }
-
-        private string Case(string s)
-        {
-            if (Parent == null)
-                return s;
-            return Parent?.Parent?.Uppercase ?? false
-                ? s.ToUpper()
-                : s;
         }
     }
 }

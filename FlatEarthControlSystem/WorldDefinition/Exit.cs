@@ -13,14 +13,22 @@ namespace FlatEarthControlSystem.WorldDefinition
         public string DetailedViewText { get; set; }
         public bool Discovered { get; set; }
 
-        public Exit() : this("", "")
+        public Exit(string usefulState, string currentState, string overviewText, string detailedViewText) : this("", "", usefulState, currentState, overviewText, detailedViewText)
         {
         }
-            
-        public Exit(string directionName, string targetRoomId)
+
+        public Exit(string directionName, string targetRoomId) : this(directionName, targetRoomId, "", "")
+        {
+        }
+
+        public Exit(string directionName, string targetRoomId, string usefulState, string currentState, string overviewText, string detailedViewText)
         {
             DirectionName = directionName;
             TargetRoomId = targetRoomId;
+            UsefulState = usefulState;
+            CurrentState = currentState;
+            OverviewText = overviewText;
+            DetailedViewText = detailedViewText;
             AvailableStates = new List<string>();
             Discovered = true;
         }

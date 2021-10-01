@@ -8,8 +8,6 @@ namespace FlatEarthControlSystem.WorldDefinition
     {
         private List<Room> Rooms { get; }
 
-        public bool Uppercase { get; set; }
-
         public World()
         {
             Rooms = new List<Room>();
