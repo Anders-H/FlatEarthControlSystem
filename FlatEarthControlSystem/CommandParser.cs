@@ -1,26 +1,11 @@
 ﻿using FlatEarthControlSystem.WorldDefinition;
 using TextAdventureGameInputParser;
-using TextAdventureGameInputParser.WordClass;
 
 namespace FlatEarthControlSystem
 {
     public class CommandParser
     {
-        private static Parser Parser { get; }
-
-        static CommandParser()
-        {
-            Parser = new Parser();
-
-            Parser.AddVerbs(
-                Words.Exits,
-                Words.Go,
-                Words.Inventory,
-                Words.Look
-            );
-
-            Parser.Aliases.Add(Words.Inventory, "I", "INV");
-        }
+        private Parser Parser { get; }
 
         private readonly World _world;
         private readonly Room _currentRoom;
@@ -31,6 +16,20 @@ namespace FlatEarthControlSystem
             _world = world;
             _currentRoom = currentRoom;
             _inventory = inventory;
+
+            Parser = new Parser();
+
+            Parser.AddVerbs(
+                Words.Exits,
+                Words.Go,
+                Words.Inventory,
+                Words.Look
+            );
+
+            foreach (var exit in _currentRoom.GetDiscoveredExits())
+                Parser.AddNouns(exit.DirectionName);
+
+            Parser.Aliases.Add(Words.Inventory, "I", "INV");
         }
 
         public SentenceWrapper Parse(string command)

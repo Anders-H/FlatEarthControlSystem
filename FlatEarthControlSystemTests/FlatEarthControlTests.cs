@@ -27,11 +27,11 @@ namespace FlatEarthControlSystemTests
         {
             var flatEarth = GetRoomInitialVisibilityTestData();
             var currentRoom = flatEarth.GetCurrentRoom();
-            Assert.IsTrue(currentRoom.CanGo(Noun.North(), out var targetId));
+            Assert.IsTrue(currentRoom.CanGo(new Noun("NORTH"), out var targetId));
             Assert.IsTrue(targetId == "5,4");
-            Assert.IsFalse(currentRoom.CanGo(Noun.West(), out targetId));
+            Assert.IsFalse(currentRoom.CanGo(new Noun("WEST"), out targetId));
             Assert.IsTrue(targetId == "4,5");
-            Assert.IsFalse(currentRoom.CanGo(Noun.North(), out targetId));
+            Assert.IsFalse(currentRoom.CanGo(new Noun("NORTH"), out targetId));
             Assert.IsTrue(string.IsNullOrWhiteSpace(targetId));
             
             var exit = currentRoom.GetAnyExit("WEST");

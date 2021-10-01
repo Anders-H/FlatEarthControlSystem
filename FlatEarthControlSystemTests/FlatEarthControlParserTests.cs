@@ -25,13 +25,13 @@ namespace FlatEarthControlSystemTests
         public void CanSeeExits()
         {
             var flatEarth = GetRoomInitialVisibilityTestData();
-            flatEarth.GetCurrentRoom()!.GetAnyExit("WEST").Discovered = false;
+            flatEarth.GetCurrentRoom()!.GetAnyExit("WEST")!.Discovered = false;
 
             var response = flatEarth.Do("EXITS");
             Assert.IsTrue(response!.Success);
             Assert.IsTrue(string.Compare(response.Text, "EXITS ARE: NORTH.", StringComparison.CurrentCultureIgnoreCase) == 0);
             
-            flatEarth.GetCurrentRoom()!.GetAnyExit("WEST").Discovered = true;
+            flatEarth.GetCurrentRoom()!.GetAnyExit("WEST")!.Discovered = true;
             response = flatEarth.Do("EXITS");
             Assert.IsTrue(response!.Success);
             Assert.IsTrue(string.Compare(response.Text, "EXITS ARE: NORTH AND WEST.", StringComparison.CurrentCultureIgnoreCase) == 0);
