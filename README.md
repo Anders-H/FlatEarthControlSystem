@@ -96,7 +96,7 @@ FIRST LOOK: Text...
 LOOK: Text...
 ```
 
-`FIRST DESCRIPTION` and `DESCRIPTION` can fall back to each other, just as `FIRST LOOK` and `LOOK`.
+`FIRST DESCRIPTION` and `DESCRIPTION` can fall back to each other, just as `FIRST LOOK` and `LOOK`. Also, if both `FIRST LOOK` and `LOOK` is ommited, it will fall back to the room description.
 
 ### Exits
 

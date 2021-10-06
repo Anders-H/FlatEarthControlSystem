@@ -31,7 +31,7 @@ namespace FlatEarthControlSystemTests
             Assert.IsTrue(targetId == "5,4");
             Assert.IsFalse(currentRoom.CanGo(new Noun("WEST"), out targetId));
             Assert.IsTrue(targetId == "4,5");
-            Assert.IsFalse(currentRoom.CanGo(new Noun("NORTH"), out targetId));
+            Assert.IsFalse(currentRoom.CanGo(new Noun("SOUTH"), out targetId));
             Assert.IsTrue(string.IsNullOrWhiteSpace(targetId));
             
             var exit = currentRoom.GetAnyExit("WEST");

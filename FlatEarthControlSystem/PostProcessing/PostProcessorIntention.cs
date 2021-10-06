@@ -2,9 +2,11 @@
 {
     public enum PostProcessorIntention
     {
-        Inventory,
-        Move,
+        Empty,
         Exits,
+        Inventory,
+        Look,
+        Move,
         Custom,
         None
     }
