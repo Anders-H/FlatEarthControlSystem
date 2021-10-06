@@ -35,10 +35,7 @@ namespace FlatEarthControlSystem
         public SentenceWrapper Parse(string command)
         {
             var sentence = Parser.Parse(command);
-            var result = new SentenceWrapper
-            {
-                Sentence = sentence
-            };
+            var result = new SentenceWrapper(sentence);
 
             if (sentence.ParseSuccess)
             {

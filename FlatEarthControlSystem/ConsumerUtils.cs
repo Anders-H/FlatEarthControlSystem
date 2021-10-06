@@ -9,7 +9,7 @@ namespace FlatEarthControlSystem
         public string GetHostPath() =>
             new FileInfo(
                 Uri.UnescapeDataString(
-                    new UriBuilder(Assembly.GetExecutingAssembly()!.CodeBase!).Path
+                    new UriBuilder(Assembly.GetExecutingAssembly()!.Location!).Path
                 )
             ).FullName;
 

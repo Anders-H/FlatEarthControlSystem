@@ -1,14 +1,14 @@
 ﻿using System;
 using MutableStringLibrary;
 
-namespace FlatEarthControlSystem
+namespace FlatEarthControlSystem.Extensions
 {
     public static class StringExtensions
     {
         public static string OnlyBasicCharacters(this string me)
         {
             var mutable = new MutableString(me);
-            mutable.Modify.LimitToCharacters("ABCDEFGHIJKLMNOPQRSTUVWXY Z0123456789");
+            mutable.Modify.LimitToCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789");
             return mutable.Value ?? "";
         }
 

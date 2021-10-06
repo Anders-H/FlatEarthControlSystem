@@ -1,6 +1,6 @@
 ﻿using TextAdventureGameInputParser;
 
-namespace FlatEarthControlSystem
+namespace FlatEarthControlSystem.Extensions
 {
     public static class SentenceExtensions
     {

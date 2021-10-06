@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FlatEarthControlSystem
+namespace FlatEarthControlSystem.Extensions
 {
     public static class StringListExtensions
     {

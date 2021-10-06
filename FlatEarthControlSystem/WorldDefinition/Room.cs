@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FlatEarthControlSystem.Extensions;
 using TextAdventureGameInputParser.WordClass;
 
 namespace FlatEarthControlSystem.WorldDefinition
@@ -96,7 +97,7 @@ namespace FlatEarthControlSystem.WorldDefinition
             Exits.GetAnyExit(direction.ToString());
 
         public ExitList GetDiscoveredExits() =>
-            new ExitList(Exits.Where(x => x.Discovered));
+            new(Exits.Where(x => x.Discovered));
 
         public ExitList GetAllExits() =>
             Exits;

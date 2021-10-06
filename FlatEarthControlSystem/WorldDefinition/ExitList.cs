@@ -30,28 +30,24 @@ namespace FlatEarthControlSystem.WorldDefinition
         public override string ToString()
         {
             var result = new StringBuilder();
-            result.Append(StandardAnswers.ExitsAre);
+            result.Append($"{StandardAnswers.ExitsAre}: ");
             switch (Count)
             {
                 case 0:
-                    result.Append(StandardAnswers.None);
+                    result.Append($"{StandardAnswers.None}.");
                     break;
                 case 1:
-                    result.Append(this.First());
-                    result.Append(".");
+                    result.Append($"{this.First()}.");
                     break;
                 case 2:
-                    result.Append(this.First());
-                    result.Append(StandardAnswers.And);
-                    result.Append(this.Last());
-                    result.Append(".");
+                    result.Append($"{this.First()} {StandardAnswers.And} {this.Last()}.");
                     break;
                 default:
 
                     for (var i = 0; i < Count; i++)
                     {
                         if (i == Count - 2)
-                            result.Append($"{this[i]}{StandardAnswers.And}");
+                            result.Append($"{this[i]} {StandardAnswers.And} ");
                         else if (i == Count - 1)
                             result.Append($"{this[i]}.");
                         else

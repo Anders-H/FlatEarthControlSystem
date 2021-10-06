@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using FlatEarthControlSystem.Extensions;
 using FlatEarthControlSystem.PreProcessing;
 using FlatEarthControlSystem.WorldDefinition;
 using TextAdventureGameInputParser;
@@ -36,7 +37,7 @@ namespace FlatEarthControlSystem
             if (sentence.Word1Is(Words.Look))
                 return Look();
 
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(@"Unknown word found.");
         }
 
         public CommandResult Go(Noun direction)
@@ -77,9 +78,9 @@ namespace FlatEarthControlSystem
                 : new CommandResult(true, $"{Phrases.YouAreNotCarryingAnything}{_player.Inventory.EnumerationText}.");
 
         private static CommandResult Fail(string text) =>
-            new CommandResult(false, text);
+            new(false, text);
 
         private static CommandResult Success(string text) =>
-            new CommandResult(true, text);
+            new(true, text);
     }
 }
