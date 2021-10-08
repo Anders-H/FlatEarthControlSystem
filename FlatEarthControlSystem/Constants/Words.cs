@@ -1,4 +1,4 @@
-﻿namespace FlatEarthControlSystem
+﻿namespace FlatEarthControlSystem.Constants
 {
     public class Words
     {

@@ -1,4 +1,5 @@
-﻿using FlatEarthControlSystem.WorldDefinition;
+﻿using FlatEarthControlSystem.Constants;
+using FlatEarthControlSystem.WorldDefinition;
 using TextAdventureGameInputParser;
 
 namespace FlatEarthControlSystem

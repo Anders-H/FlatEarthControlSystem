@@ -1,4 +1,5 @@
 ﻿using System;
+using FlatEarthControlSystem.Extensions;
 using FlatEarthControlSystem.WorldDefinition;
 using FlatEarthControlSystemTests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -53,22 +54,22 @@ namespace FlatEarthControlSystemTests
 
             var response = flatEarth.Do("exits");
             Assert.IsTrue(response.Success);
-            Assert.IsTrue(string.Compare(response.Text, "EXITS ARE: NORTH.", StringComparison.CurrentCultureIgnoreCase) == 0);
+            Assert.IsTrue(response.Text.Is("EXITS ARE: NORTH."));
             
             flatEarth.GetCurrentRoom().GetAnyExit("WEST")!.Discovered = true;
             response = flatEarth.Do("exits");
             Assert.IsTrue(response.Success);
-            Assert.IsTrue(string.Compare(response.Text, "EXITS ARE: NORTH AND WEST.", StringComparison.CurrentCultureIgnoreCase) == 0);
+            Assert.IsTrue(response.Text.Is("EXITS ARE: NORTH AND WEST."));
 
             flatEarth.GetCurrentRoom().AddExit(new Exit("SOUTH", "5,4"));
             response = flatEarth.Do("exits");
             Assert.IsTrue(response.Success);
-            Assert.IsTrue(string.Compare(response.Text, "EXITS ARE: NORTH, WEST AND SOUTH.", StringComparison.CurrentCultureIgnoreCase) == 0);
+            Assert.IsTrue(response.Text.Is("EXITS ARE: NORTH, WEST AND SOUTH."));
 
             flatEarth.GetCurrentRoom().AddExit(new Exit("EAST", "4,5"));
             response = flatEarth.Do("exits");
             Assert.IsTrue(response.Success);
-            Assert.IsTrue(string.Compare(response.Text, "EXITS ARE: NORTH, WEST, SOUTH AND EAST.", StringComparison.CurrentCultureIgnoreCase) == 0);
+            Assert.IsTrue(response.Text.Is("EXITS ARE: NORTH, WEST, SOUTH AND EAST."));
         }
 
         [TestMethod]

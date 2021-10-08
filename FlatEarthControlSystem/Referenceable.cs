@@ -1,4 +1,5 @@
 ﻿using System;
+using FlatEarthControlSystem.Extensions;
 
 namespace FlatEarthControlSystem
 {
@@ -27,13 +28,12 @@ namespace FlatEarthControlSystem
         }
 
         public bool HasName =>
-            !string.IsNullOrWhiteSpace(UniqueName)
-            || !string.IsNullOrWhiteSpace(RelaxedName);
+            !UniqueName.IsEmpty() || !RelaxedName.IsEmpty();
 
         public bool ItemHasMultipleNames =>
-            !string.IsNullOrWhiteSpace(UniqueName)
-            && !string.IsNullOrWhiteSpace(RelaxedName)
-            && string.Compare(UniqueName, RelaxedName, StringComparison.CurrentCultureIgnoreCase) != 0;
+            !UniqueName.IsEmpty()
+            && !RelaxedName.IsEmpty()
+            && !UniqueName.Is(RelaxedName);
 
         public string GetMostUniqueName() =>
             string.IsNullOrWhiteSpace(UniqueName)
@@ -41,7 +41,7 @@ namespace FlatEarthControlSystem
                 : UniqueName;
 
         public string GetMostRelaxedName() =>
-            string.IsNullOrWhiteSpace(RelaxedName)
+            RelaxedName.IsEmpty()
                 ? UniqueName
                 : RelaxedName;
 

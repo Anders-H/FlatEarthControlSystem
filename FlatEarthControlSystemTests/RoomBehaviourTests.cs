@@ -1,5 +1,6 @@
 ﻿using System;
 using FlatEarthControlSystem;
+using FlatEarthControlSystem.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatEarthControlSystemTests
@@ -114,13 +115,7 @@ CURRENT ROOM 1,1
 
             flatEarth.Do("go south");
 
-            Assert.IsTrue(
-                string.Compare(
-                    "This is room 1,2",
-                    flatEarth.GetCurrentRoom().GetDescription(),
-                    StringComparison.CurrentCultureIgnoreCase
-                ) == 0
-            );
+            Assert.IsTrue("This is room 1,2".Is(flatEarth.GetCurrentRoom().GetDescription()));
         }
 
         [TestMethod]
@@ -142,7 +137,7 @@ END ROOM
 
 CURRENT ROOM 1,1
 ");
-            Assert.IsTrue(string.IsNullOrEmpty(flatEarth.GetCurrentRoom().Description));
+            Assert.IsTrue(flatEarth.GetCurrentRoom().Description.IsEmpty());
             Assert.IsTrue(flatEarth.GetCurrentRoom().FirstEntryDescription == "This is room 1,1");
 
             Assert.IsTrue(

@@ -5,18 +5,16 @@
         public string SourceText { get; set; }
         public bool Cancel { get; set; }
         public string CancelText { get; set; }
-        public PreProcessorIntention PreProcessorIntention { get; internal set; }
 
-        public PreProcessorArguments() : this("", false, "", PreProcessorIntention.Empty)
+        public PreProcessorArguments() : this("", false, "")
         {
         }
 
-        public PreProcessorArguments(string sourceText, bool cancel, string cancelText, PreProcessorIntention preProcessorIntention)
+        public PreProcessorArguments(string sourceText, bool cancel, string cancelText)
         {
             SourceText = sourceText;
             Cancel = cancel;
             CancelText = cancelText;
-            PreProcessorIntention = preProcessorIntention;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
+using FlatEarthControlSystem.Constants;
 using FlatEarthControlSystem.Extensions;
-using FlatEarthControlSystem.PreProcessing;
 using FlatEarthControlSystem.WorldDefinition;
 using TextAdventureGameInputParser;
 using TextAdventureGameInputParser.WordClass;
@@ -52,7 +52,7 @@ namespace FlatEarthControlSystem
             var roomDescription = room.GetDescription();
 
             return Success(
-                string.IsNullOrWhiteSpace(roomDescription)
+                roomDescription.IsEmpty()
                     ? StandardAnswers.Ok
                     : roomDescription
             );

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FlatEarthControlSystem.Extensions;
 
 namespace FlatEarthControlSystem
 {
@@ -19,7 +19,7 @@ namespace FlatEarthControlSystem
                 {
                     var first = this.First().RelaxedName;
                     var last = this.Last().RelaxedName;
-                    if (string.Compare(first, last, StringComparison.CurrentCultureIgnoreCase) == 0)
+                    if (first.Is(last))
                     {
                         first = this.First().GetMostUniqueNameWithIndefiniteArticle();
                         last = this.Last().GetMostUniqueNameWithIndefiniteArticle();
@@ -29,7 +29,7 @@ namespace FlatEarthControlSystem
                         first = this.First().GetMostRelaxedNameWithIndefiniteArticle();
                         last = this.Last().GetMostRelaxedNameWithIndefiniteArticle();
                     }
-                    return $"{first}{Phrases.And}{last}";
+                    return $"{first} {Phrases.And} {last}";
                 }
 
                 foreach (var item in this)
@@ -40,7 +40,7 @@ namespace FlatEarthControlSystem
                     foreach (
                         var item2 in this
                             .Where(item2 => item1 != item2)
-                            .Where(item2 => !string.IsNullOrWhiteSpace(item1.RelaxedName) && string.Compare(item1.GetMostRelaxedName(), item2.GetMostRelaxedName(), StringComparison.CurrentCultureIgnoreCase) == 0)
+                            .Where(item2 => !item1.RelaxedName.IsEmpty() && item1.GetMostRelaxedName().Is(item2.GetMostRelaxedName()))
                     )
                     {
                         item1.CanUseRelaxedName = false;
