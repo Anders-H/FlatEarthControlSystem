@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MutableStringLibrary" Version="1.0.8" />
-      <PackageReference Include="TextAdventureGameInputParser" Version="1.0.0" />
+      <PackageReference Include="MutableStringLibrary" Version="1.1.23" />
+      <PackageReference Include="TextAdventureGameInputParser" Version="1.0.1" />
     </ItemGroup>
 
 </Project>

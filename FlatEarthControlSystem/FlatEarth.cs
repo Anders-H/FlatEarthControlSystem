@@ -62,7 +62,7 @@ namespace FlatEarthControlSystem
                 var preProcessorArguments = new PreProcessorArguments
                 {
                     SourceText = command,
-                    PreProcessorIntention = PreProcessorIntention.ParseFailed
+                    //TODO: PreProcessorIntention = PreProcessorIntention.ParseFailed
                 };
 
                 CustomPreProcessor.Invoke(preProcessorArguments);
