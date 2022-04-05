@@ -1,7 +1,5 @@
 ﻿using System;
 using FlatEarthControlSystem.Constants;
-using FlatEarthControlSystem.PostProcessing;
-using FlatEarthControlSystem.PreProcessing;
 using FlatEarthControlSystem.WorldDefinition;
 using FlatEarthControlSystem.WorldDefinitionParser;
 
@@ -9,9 +7,6 @@ namespace FlatEarthControlSystem
 {
     public class FlatEarth
     {
-        public PreProcessor? CustomPreProcessor;
-        public PostProcessor? CustomPostProcessor;
-        
         public World World { get; private set; }
         public Player Player { get; private set; }
         public WorldObjectList WorldObjects { get; }
@@ -52,34 +47,6 @@ namespace FlatEarthControlSystem
                 Player.Inventory
             ).Parse(command);
 
-            var preProcessor = CustomPreProcessor;
-            
-            if (!result.Success)
-            {
-                if (CustomPreProcessor == null)
-                    return Fail(string.IsNullOrWhiteSpace(result.Message) ? StandardAnswers.IdontUnderstand : result.Message);
-
-                var preProcessorArguments = new PreProcessorArguments
-                {
-                    SourceText = command,
-                    //TODO: PreProcessorIntention = PreProcessorIntention.ParseFailed
-                };
-
-                CustomPreProcessor.Invoke(preProcessorArguments);
-
-                if (preProcessorArguments.Cancel)
-                    return Fail(string.IsNullOrWhiteSpace(preProcessorArguments.CancelText)
-                        ? StandardAnswers.IdontUnderstand
-                        : preProcessorArguments.CancelText);
-
-                preProcessor = null;
-            }
-
-            if (preProcessor != null)
-            {
-                //TODO
-            }
-            
             var executer = new CommandExecuter(
                 Player,
                 World,
