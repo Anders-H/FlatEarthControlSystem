@@ -74,8 +74,8 @@ namespace FlatEarthControlSystem
 
         public CommandResult Inventory() =>
             _player.Inventory.Empty()
-                ? new CommandResult(true, Phrases.YouAreNotCarryingAnything)
-                : new CommandResult(true, $"{Phrases.YouAreNotCarryingAnything}{_player.Inventory.EnumerationText}.");
+                ? new CommandResult(true, StandardAnswers.YouAreNotCarryingAnything)
+                : new CommandResult(true, $"{StandardAnswers.YouAreCarrying} {_player.Inventory.EnumerationText}.");
 
         private static CommandResult Fail(string text) =>
             new(false, text);

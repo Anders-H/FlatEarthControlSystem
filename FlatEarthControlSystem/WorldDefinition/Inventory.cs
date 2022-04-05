@@ -1,4 +1,6 @@
-﻿namespace FlatEarthControlSystem.WorldDefinition
+﻿using FlatEarthControlSystem.Constants;
+
+namespace FlatEarthControlSystem.WorldDefinition
 {
     public class Inventory
     {
@@ -16,8 +18,8 @@
 
         public string EnumerationText =>
             _objects.Count > 0
-                ? $"You are carrying {_objects.EnumerationText}."
-                : "You are no carrying anything.";
+                ? $"{StandardAnswers.YouAreCarrying} {_objects.EnumerationText}."
+                : StandardAnswers.YouAreNotCarryingAnything;
 
         public void AddWorldObject(string uniqueName, string indefiniteArticleForUniqueName, string relaxedName, string indefiniteArticleForRelaxedName, bool discovered, bool willDisposeAfterUse) =>
             _objects.Add(new WorldObject(uniqueName, indefiniteArticleForUniqueName, relaxedName, indefiniteArticleForRelaxedName, discovered, willDisposeAfterUse));

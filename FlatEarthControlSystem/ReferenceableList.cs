@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FlatEarthControlSystem.Constants;
 using FlatEarthControlSystem.Extensions;
 
 namespace FlatEarthControlSystem
@@ -29,7 +30,7 @@ namespace FlatEarthControlSystem
                         first = this.First().GetMostRelaxedNameWithIndefiniteArticle();
                         last = this.Last().GetMostRelaxedNameWithIndefiniteArticle();
                     }
-                    return $"{first} {Phrases.And} {last}";
+                    return $"{first} {StandardAnswers.And} {last}";
                 }
 
                 foreach (var item in this)
@@ -61,7 +62,7 @@ namespace FlatEarthControlSystem
                     if (i < strings.Count - 2)
                         result.Append(", ");
                     else if (i == strings.Count - 2)
-                        result.Append(Phrases.And);
+                        result.Append($" {StandardAnswers.And} ");
                 }
 
                 return result.ToString();

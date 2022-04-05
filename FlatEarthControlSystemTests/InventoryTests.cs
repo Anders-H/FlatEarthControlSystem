@@ -1,4 +1,5 @@
 ﻿using FlatEarthControlSystem;
+using FlatEarthControlSystem.Constants;
 using FlatEarthControlSystem.WorldDefinition;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +13,7 @@ namespace FlatEarthControlSystemTests
         {
             var flatEarth = new FlatEarth();
             var i = new Inventory(flatEarth);
-            Assert.IsTrue(i.EnumerationText == "You are no carrying anything.");
+            Assert.IsTrue(i.EnumerationText == StandardAnswers.YouAreNotCarryingAnything);
         }
 
         [TestMethod]
@@ -23,7 +24,7 @@ namespace FlatEarthControlSystemTests
 
             i.AddWorldObject("fish", "a", "", "", true);
             
-            Assert.IsTrue(i.EnumerationText == "You are carrying a fish.");
+            Assert.IsTrue(i.EnumerationText == $"{StandardAnswers.YouAreCarrying} a fish.");
         }
 
         [TestMethod]
@@ -35,7 +36,7 @@ namespace FlatEarthControlSystemTests
             i.AddWorldObject("elf", "an", "dead elf", "a", true);
             i.AddWorldObject("elf", "an", "happy elf", "a", true);
 
-            Assert.IsTrue(i.EnumerationText == "You are carrying a dead elf and a happy elf.");
+            Assert.IsTrue(i.EnumerationText == $"{StandardAnswers.YouAreCarrying} a dead elf AND a happy elf.");
         }
 
         [TestMethod]
@@ -48,7 +49,7 @@ namespace FlatEarthControlSystemTests
             i1.AddWorldObject("skeleton key", "a", "key", "a", true);
             i1.AddWorldObject("dead elf", "a", "elf", "an", true);
 
-            Assert.IsTrue(i1.EnumerationText == "You are carrying a golden key, a skeleton key and an elf.");
+            Assert.IsTrue(i1.EnumerationText == $"{StandardAnswers.YouAreCarrying} a golden key, a skeleton key AND an elf.");
         }
     }
 }
