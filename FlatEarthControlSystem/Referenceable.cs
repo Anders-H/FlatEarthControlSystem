@@ -1,5 +1,4 @@
-﻿using System;
-using FlatEarthControlSystem.Extensions;
+﻿using FlatEarthControlSystem.Extensions;
 
 namespace FlatEarthControlSystem
 {

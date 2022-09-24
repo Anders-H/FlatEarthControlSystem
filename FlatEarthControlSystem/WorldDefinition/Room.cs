@@ -38,14 +38,15 @@ namespace FlatEarthControlSystem.WorldDefinition
         }
 
         public string GetDescription() =>
+        (
             (
-                (
-                    VisitCount <= 1
+                VisitCount <= 1
                     ? FirstEntryDescription.IsEmpty() ? Description : FirstEntryDescription
-                    : Description.IsEmpty() ? FirstEntryDescription : Description
-                )
-                ?? ""
-            ).ToUpper();
+                    : Description.IsEmpty()
+                        ? FirstEntryDescription
+                        : Description
+            ) ?? ""
+        );
 
         public string GetLookText()
         {

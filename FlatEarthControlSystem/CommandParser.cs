@@ -35,6 +35,8 @@ namespace FlatEarthControlSystem
 
         public SentenceWrapper Parse(string command)
         {
+            // TODO: Translate all shortcuts. N should be GO NORTH, and so on.
+
             var sentence = Parser.Parse(command);
             var result = new SentenceWrapper(sentence);
 
@@ -53,7 +55,7 @@ namespace FlatEarthControlSystem
             else
             {
                 result.Success = false;
-                result.Message = StandardAnswers.IdontUnderstand;
+                result.Message = StandardAnswers.IDontUnderstand;
             }
 
             return result;

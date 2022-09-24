@@ -1,5 +1,4 @@
-﻿using FlatEarthControlSystem;
-using FlatEarthControlSystem.Extensions;
+﻿using FlatEarthControlSystem.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatEarthControlSystemTests

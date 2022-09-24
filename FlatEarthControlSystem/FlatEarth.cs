@@ -1,5 +1,4 @@
 ﻿using System;
-using FlatEarthControlSystem.Constants;
 using FlatEarthControlSystem.WorldDefinition;
 using FlatEarthControlSystem.WorldDefinitionParser;
 
@@ -12,10 +11,6 @@ namespace FlatEarthControlSystem
         public WorldObjectList WorldObjects { get; }
 
 
-        static FlatEarth()
-        {
-        }
-        
         public FlatEarth()
         {
             World = new World();
