@@ -4,7 +4,7 @@ public class StandardAnswers
 {
     public const string And = "and";
     public const string ExitsAre = "Exits are";
-    public const string GoWhere = "Go where?";
+    public const string GoWhere = "You can't go that way.";
     public const string IDontUnderstand = "I don't understand.";
     public const string None = "none";
     public const string Ok = "OK.";

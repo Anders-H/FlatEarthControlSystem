@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MutableStringLibrary;
 
 namespace FlatEarthControlSystem.Extensions;
@@ -17,6 +18,9 @@ public static class StringExtensions
 
     public static bool Is(this string? me, string? other) =>
         string.Compare(me, other, StringComparison.CurrentCultureIgnoreCase) == 0;
+
+    public static bool IsAny(this string? me, params string?[] other) =>
+        other.Any(s => Is(me, s));
 
     public static bool IsEmpty(this string? me) =>
         string.IsNullOrWhiteSpace(me);
