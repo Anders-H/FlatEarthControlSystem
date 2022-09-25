@@ -2,63 +2,62 @@
 using FlatEarthControlSystem.WorldDefinition;
 using TextAdventureGameInputParser;
 
-namespace FlatEarthControlSystem
+namespace FlatEarthControlSystem;
+
+public class CommandParser
 {
-    public class CommandParser
+    private Parser Parser { get; }
+
+    private readonly World _world;
+    private readonly Room _currentRoom;
+    private readonly Inventory _inventory;
+
+    public CommandParser(World world, Room currentRoom, Inventory inventory)
     {
-        private Parser Parser { get; }
+        _world = world;
+        _currentRoom = currentRoom;
+        _inventory = inventory;
 
-        private readonly World _world;
-        private readonly Room _currentRoom;
-        private readonly Inventory _inventory;
+        Parser = new Parser();
 
-        public CommandParser(World world, Room currentRoom, Inventory inventory)
+        Parser.AddVerbs(
+            Words.Exits,
+            Words.Go,
+            Words.Inventory,
+            Words.Look
+        );
+
+        foreach (var exit in _currentRoom.GetDiscoveredExits())
+            Parser.AddNouns(exit.DirectionName);
+
+        Parser.Aliases.Add(Words.Inventory, "I", "INV");
+    }
+
+    public SentenceWrapper Parse(string command)
+    {
+        // TODO: Translate all shortcuts. N should be GO NORTH, and so on.
+
+        var sentence = Parser.Parse(command);
+        var result = new SentenceWrapper(sentence);
+
+        if (sentence.ParseSuccess)
         {
-            _world = world;
-            _currentRoom = currentRoom;
-            _inventory = inventory;
-
-            Parser = new Parser();
-
-            Parser.AddVerbs(
-                Words.Exits,
-                Words.Go,
-                Words.Inventory,
-                Words.Look
-            );
-
-            foreach (var exit in _currentRoom.GetDiscoveredExits())
-                Parser.AddNouns(exit.DirectionName);
-
-            Parser.Aliases.Add(Words.Inventory, "I", "INV");
-        }
-
-        public SentenceWrapper Parse(string command)
-        {
-            // TODO: Translate all shortcuts. N should be GO NORTH, and so on.
-
-            var sentence = Parser.Parse(command);
-            var result = new SentenceWrapper(sentence);
-
-            if (sentence.ParseSuccess)
+            if (!sentence.Ambiguous)
             {
-                if (!sentence.Ambiguous)
-                {
-                    result.Success = true;
-                    result.Message = StandardAnswers.Ok;
-                    return result;
-                }
-
-                result.Success = false;
-                result.Message = sentence.UnknownWord;
-            }
-            else
-            {
-                result.Success = false;
-                result.Message = StandardAnswers.IDontUnderstand;
+                result.Success = true;
+                result.Message = StandardAnswers.Ok;
+                return result;
             }
 
-            return result;
+            result.Success = false;
+            result.Message = sentence.UnknownWord;
         }
+        else
+        {
+            result.Success = false;
+            result.Message = StandardAnswers.IDontUnderstand;
+        }
+
+        return result;
     }
 }

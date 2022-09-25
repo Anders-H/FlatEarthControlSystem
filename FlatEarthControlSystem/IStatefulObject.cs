@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace FlatEarthControlSystem
+namespace FlatEarthControlSystem;
+
+public interface IStatefulObject
 {
-    public interface IStatefulObject
-    {
-        List<string> AvailableStates { get; }
-        string UsefulState { get; }
-        string CurrentState { get; }
-    }
+    List<string> AvailableStates { get; }
+    string UsefulState { get; }
+    string CurrentState { get; }
 }

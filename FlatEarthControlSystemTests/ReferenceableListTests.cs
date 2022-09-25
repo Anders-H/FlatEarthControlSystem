@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FlatEarthControlSystemTests
+namespace FlatEarthControlSystemTests;
+
+[TestClass]
+public class ReferenceableListTests
 {
-    [TestClass]
-    public class ReferenceableListTests
-    {
-    }
 }

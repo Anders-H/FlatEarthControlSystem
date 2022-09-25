@@ -1,8 +1,7 @@
-﻿namespace FlatEarthControlSystem
+﻿namespace FlatEarthControlSystem;
+
+public interface IDescribableObject
 {
-    public interface IDescribableObject
-    {
-        string OverviewText { get; }
-        string DetailedViewText { get; }
-    }
+    string OverviewText { get; }
+    string DetailedViewText { get; }
 }
