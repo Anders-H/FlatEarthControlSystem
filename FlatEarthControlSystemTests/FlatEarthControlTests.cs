@@ -7,7 +7,7 @@ using TextAdventureGameInputParser.WordClass;
 namespace FlatEarthControlSystemTests;
 
 [TestClass]
-public class FlatEarthControlTests : FlatEarchControlBase
+public class FlatEarthControlTests : FlatEarthControlBase
 {
     [TestMethod]
     public void CanNavigate()

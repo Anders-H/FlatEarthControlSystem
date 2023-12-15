@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FlatEarthControlSystemTests;
 
 [TestClass]
-public class FlatEarthControlParserTests : FlatEarchControlBase
+public class FlatEarthControlParserTests : FlatEarthControlBase
 {
     [TestMethod]
     public void CanNavigate()

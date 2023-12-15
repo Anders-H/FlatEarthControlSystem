@@ -32,6 +32,7 @@ public class ExitList : List<Exit>
     {
         var result = new StringBuilder();
         result.Append($"{StandardAnswers.ExitsAre}: ");
+
         switch (Count)
         {
             case 0:
@@ -56,6 +57,7 @@ public class ExitList : List<Exit>
                 }
                 break;
         }
+
         return result
             .ToString()
             .Trim();

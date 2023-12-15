@@ -3,7 +3,7 @@ using FlatEarthControlSystem.WorldDefinition;
 
 namespace FlatEarthControlSystemTests.Common;
 
-public class FlatEarchControlBase
+public class FlatEarthControlBase
 {
     protected FlatEarth GetCanNavigateTestData()
     {

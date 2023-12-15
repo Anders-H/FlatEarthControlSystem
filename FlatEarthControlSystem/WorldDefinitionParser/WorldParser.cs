@@ -51,8 +51,10 @@ public class WorldParser
             if (row.StartsWith(currentRoom))
             {
                 var roomId = row.Substring(currentRoom.Length).Trim();
+
                 if (string.IsNullOrWhiteSpace(roomId))
                     throw new Exception($"Missing room ID: {row}");
+                
                 startRoomId = roomId;
                 continue;
             }
@@ -60,10 +62,13 @@ public class WorldParser
             if (row.StartsWith(beginRoom))
             {
                 var roomId = row.Substring(beginRoom.Length).Trim();
+                
                 if (string.IsNullOrWhiteSpace(roomId))
                     throw new Exception($"Missing room ID: {row}");
+                
                 if (world.RoomExist(roomId))
                     throw new Exception($"Duplicate room ID: {roomId}");
+                
                 r = new Room(roomId);
                 continue;
             }
@@ -72,6 +77,7 @@ public class WorldParser
             {
                 if (r == null)
                     throw new Exception($"Unexpected: {endRoom}");
+                
                 world.AddRoom(r);
                 r = null;
                 continue;
@@ -80,12 +86,16 @@ public class WorldParser
             if (row.StartsWith(beginExit))
             {
                 var parts = row.Substring(beginExit.Length).Trim().Split(':');
+                
                 if (parts.Length != 2)
                     throw new Exception($"Wrong arguments: {row}");
+                
                 var directionName = parts[0].Trim();
                 var targetRoomId = parts[1].Trim();
+                
                 if (r == null)
                     throw new Exception($"No open room: {row}");
+                
                 e = new Exit(directionName, targetRoomId);
                 continue;
             }
@@ -94,6 +104,7 @@ public class WorldParser
             {
                 if (r == null || e == null)
                     throw new Exception($"Unexpected: {endExit}");
+                
                 r.AddExit(e);
                 e = null;
                 continue;
@@ -103,6 +114,7 @@ public class WorldParser
             {
                 if (r == null || e == null)
                     throw new Exception($"Unexpected: {notDiscovered}");
+                
                 e.Discovered = false;
                 continue;
             }
@@ -111,6 +123,7 @@ public class WorldParser
             {
                 if (r == null)
                     throw new Exception($"Unexpected: {firstDescription}");
+                
                 r.FirstEntryDescription = row.Substring(firstDescription.Length).Trim();
                 continue;
             }
@@ -119,6 +132,7 @@ public class WorldParser
             {
                 if (r == null)
                     throw new Exception($"Unexpected: {description}");
+                
                 r.Description = row.Substring(description.Length).Trim();
                 continue;
             }
@@ -127,6 +141,7 @@ public class WorldParser
             {
                 if (r == null)
                     throw new Exception($"Unexpected: {firstLook}");
+                
                 r.FirstLook = row.Substring(firstLook.Length).Trim();
                 continue;
             }
@@ -135,6 +150,7 @@ public class WorldParser
             {
                 if (r == null)
                     throw new Exception($"Unexpected: {look}");
+                
                 r.Look = row.Substring(look.Length).Trim();
                 continue;
             }

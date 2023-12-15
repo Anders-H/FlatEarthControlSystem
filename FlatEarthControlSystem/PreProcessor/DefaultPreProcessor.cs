@@ -9,16 +9,16 @@ public class DefaultPreProcessor : IPreProcessor
         if (command.IsAny("I", "Inv"))
             return "Inventory";
 
-        if (command.IsAny("N", "Go N"))
+        if (command.IsAny("North", "N", "Go N"))
             return "Go north";
 
-        if (command.IsAny("S", "Go S"))
+        if (command.IsAny("South", "S", "Go S"))
             return "Go south";
 
-        if (command.IsAny("E", "Go E"))
+        if (command.IsAny("East", "E", "Go E"))
             return "Go south";
 
-        if (command.IsAny("W", "Go W"))
+        if (command.IsAny("West",  "W", "Go W"))
             return "Go west";
 
         return command;

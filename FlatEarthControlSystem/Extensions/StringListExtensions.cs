@@ -8,6 +8,7 @@ public static class StringListExtensions
     {
         if (me.Count <= 0)
             return "";
+
         var result = me[0];
         me.RemoveAt(0);
         return result;

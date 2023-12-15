@@ -35,8 +35,6 @@ public class CommandParser
 
     public SentenceWrapper Parse(string command)
     {
-        // TODO: Translate all shortcuts. N should be GO NORTH, and so on.
-
         var sentence = Parser.Parse(command);
         var result = new SentenceWrapper(sentence);
 

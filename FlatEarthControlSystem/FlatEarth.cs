@@ -50,23 +50,25 @@ public class FlatEarth
             Player.Inventory
         ).Parse(command);
 
-        var executer = new CommandExecuter(
+        var runner = new CommandExecuter(
             Player,
             World,
             currentRoom
         );
 
-        return executer.Apply(result.Sentence);
+        return runner.Apply(result.Sentence);
     }
 
     public Room GetCurrentRoom()
     {
         var currentRoom = World.GetRoom(Player.GetCurrentRoomId());
+
         if (currentRoom == null)
             throw new SystemException("Room does not exist.");
+        
         return currentRoom;
     }
 
     private static CommandResult Fail(string text) =>
-        new CommandResult(false, text);
+        new(false, text);
 }

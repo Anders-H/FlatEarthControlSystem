@@ -14,8 +14,10 @@ public class ReferenceableList<T> : List<Referenceable>
         {
             if (Count <= 0)
                 return "";
+
             if (Count == 1)
                 return this.First().GetMostRelaxedNameWithIndefiniteArticle();
+            
             if (Count == 2)
             {
                 var first = this.First().RelaxedName;
@@ -56,6 +58,7 @@ public class ReferenceableList<T> : List<Referenceable>
             ).ToList();
 
             var result = new StringBuilder();
+            
             for (var i = 0; i < strings.Count; i++)
             {
                 result.Append(strings[i]);

@@ -4,6 +4,10 @@ namespace FlatEarthControlSystem;
 
 public class SentenceWrapper
 {
+    public bool Success { get; set; }
+    public string Message { get; set; }
+    public Sentence Sentence { get; set; }
+
     public SentenceWrapper(Sentence sentence) : this(false, "", sentence)
     {
     }
@@ -14,8 +18,4 @@ public class SentenceWrapper
         Message = message;
         Sentence = sentence;
     }
-
-    public bool Success { get; set; }
-    public string Message { get; set; }
-    public Sentence Sentence { get; set; }
 }
