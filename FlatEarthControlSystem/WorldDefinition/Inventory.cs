@@ -10,7 +10,7 @@ public class Inventory
     public Inventory(FlatEarth flatEarth)
     {
         _flatEarth = flatEarth;
-        _objects = new WorldObjectList();
+        _objects = [];
     }
 
     public bool Empty() =>

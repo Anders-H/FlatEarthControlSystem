@@ -21,9 +21,7 @@ public class ExitList : List<Exit>
     public Exit? GetDiscoveredExit(string? direction) =>
         direction == null
             ? null
-            : this.FirstOrDefault(
-                x => x.Discovered && x.DirectionName == direction.ToString()
-            );
+            : this.FirstOrDefault(x => x.Discovered && x.DirectionName == direction);
 
     public Exit? GetAnyExit(string direction) =>
         this.FirstOrDefault(x => x.DirectionName == direction);

@@ -18,7 +18,7 @@ public class WorldParser
         startRoomId = "";
             
         var rows = _sourceData
-            .Split(new [] { "\n" }, StringSplitOptions.RemoveEmptyEntries)
+            .Split(["\n"], StringSplitOptions.RemoveEmptyEntries)
             .Select(
                 mobile => mobile.Trim()).Where(s => s != string.Empty
             )

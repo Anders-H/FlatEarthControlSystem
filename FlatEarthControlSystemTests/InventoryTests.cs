@@ -36,7 +36,7 @@ public class InventoryTests
         i.AddWorldObject("elf", "an", "dead elf", "a", true);
         i.AddWorldObject("elf", "an", "happy elf", "a", true);
 
-        Assert.IsTrue(i.EnumerationText == $"{StandardAnswers.YouAreCarrying} a dead elf AND a happy elf.");
+        Assert.IsTrue(i.EnumerationText == $"{StandardAnswers.YouAreCarrying} a dead elf and a happy elf.");
     }
 
     [TestMethod]
@@ -49,6 +49,6 @@ public class InventoryTests
         i1.AddWorldObject("skeleton key", "a", "key", "a", true);
         i1.AddWorldObject("dead elf", "a", "elf", "an", true);
 
-        Assert.IsTrue(i1.EnumerationText == $"{StandardAnswers.YouAreCarrying} a golden key, a skeleton key AND an elf.");
+        Assert.IsTrue(i1.EnumerationText == $"{StandardAnswers.YouAreCarrying} a golden key, a skeleton key and an elf.");
     }
 }

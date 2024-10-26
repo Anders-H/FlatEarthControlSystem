@@ -87,7 +87,7 @@ CURRENT ROOM 5,5
         Assert.IsTrue(exit == null);
         exit = currentRoom.GetAnyExit(new Noun("WEST"));
         Assert.IsFalse(exit == null);
-        exit!.Discovered = true;
+        exit.Discovered = true;
             
         Assert.IsTrue(currentRoom.CanGo(new Noun("NORTH"), out targetId));
         Assert.IsTrue(targetId == "5,4");

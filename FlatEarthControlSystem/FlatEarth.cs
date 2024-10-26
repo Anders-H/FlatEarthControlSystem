@@ -19,7 +19,7 @@ public class FlatEarth
     public FlatEarth(IPreProcessor preProcessor)
     {
         World = new World();
-        WorldObjects = new WorldObjectList();
+        WorldObjects = [];
         Player = new Player(this);
         PreProcessor = preProcessor;
     }
@@ -50,7 +50,7 @@ public class FlatEarth
             Player.Inventory
         ).Parse(command);
 
-        var runner = new CommandExecuter(
+        var runner = new CommandExecutor(
             Player,
             World,
             currentRoom
@@ -68,7 +68,4 @@ public class FlatEarth
         
         return currentRoom;
     }
-
-    private static CommandResult Fail(string text) =>
-        new(false, text);
 }

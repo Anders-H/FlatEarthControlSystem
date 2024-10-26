@@ -13,11 +13,11 @@ public class FlatEarthControlParserTests : FlatEarthControlBase
     {
         var flatEarth = GetCanNavigateTestData();
         Assert.IsTrue(flatEarth.Player.GetCurrentRoomId () == "5,5");
-        Assert.IsTrue(flatEarth.Do("GO NORTH")!.Success);
+        Assert.IsTrue(flatEarth.Do("GO NORTH").Success);
         Assert.IsTrue(flatEarth.Player.GetCurrentRoomId() == "5,4");
-        Assert.IsTrue(flatEarth.Do("GO SOUTH")!.Success);
+        Assert.IsTrue(flatEarth.Do("GO SOUTH").Success);
         Assert.IsTrue(flatEarth.Player.GetCurrentRoomId() == "5,5");
-        Assert.IsFalse(flatEarth.Do("GO SOUTH")!.Success);
+        Assert.IsFalse(flatEarth.Do("GO SOUTH").Success);
         Assert.IsTrue(flatEarth.Player.GetCurrentRoomId() == "5,5");
     }
 
@@ -25,20 +25,20 @@ public class FlatEarthControlParserTests : FlatEarthControlBase
     public void CanSeeExits()
     {
         var flatEarth = GetRoomInitialVisibilityTestData();
-        flatEarth.GetCurrentRoom()!.GetAnyExit("WEST")!.Discovered = false;
+        flatEarth.GetCurrentRoom().GetAnyExit("WEST")!.Discovered = false;
 
         var response = flatEarth.Do("EXITS");
-        Assert.IsTrue(response!.Success);
+        Assert.IsTrue(response.Success);
         Assert.IsTrue(string.Compare(response.Text, "EXITS ARE: NORTH.", StringComparison.CurrentCultureIgnoreCase) == 0);
             
         flatEarth.GetCurrentRoom()!.GetAnyExit("WEST")!.Discovered = true;
         response = flatEarth.Do("EXITS");
-        Assert.IsTrue(response!.Success);
+        Assert.IsTrue(response.Success);
         Assert.IsTrue(string.Compare(response.Text, "EXITS ARE: NORTH AND WEST.", StringComparison.CurrentCultureIgnoreCase) == 0);
 
         flatEarth.GetCurrentRoom().AddExit(new Exit("SOUTH", "4,5"));
         response = flatEarth.Do("EXITS");
-        Assert.IsTrue(response!.Success);
+        Assert.IsTrue(response.Success);
         Assert.IsTrue(string.Compare(response.Text, "EXITS ARE: NORTH, WEST AND SOUTH.", StringComparison.CurrentCultureIgnoreCase) == 0);
     }
         

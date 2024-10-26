@@ -25,7 +25,7 @@ public class Exit : IStatefulObject, IDescribableObject
         CurrentState = currentState;
         OverviewText = overviewText;
         DetailedViewText = detailedViewText;
-        AvailableStates = new List<string>();
+        AvailableStates = [];
         Discovered = true;
     }
 

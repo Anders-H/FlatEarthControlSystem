@@ -8,13 +8,13 @@ using TextAdventureGameInputParser.WordClass;
 
 namespace FlatEarthControlSystem;
 
-public class CommandExecuter
+public class CommandExecutor
 {
     private readonly World _world;
     private readonly Player _player;
     private readonly Room _currentRoom;
 
-    public CommandExecuter(Player player, World world, Room currentRoom)
+    public CommandExecutor(Player player, World world, Room currentRoom)
     {
         _player = player;
         _world = world;

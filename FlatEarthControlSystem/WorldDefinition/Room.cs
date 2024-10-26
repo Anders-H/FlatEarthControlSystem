@@ -27,7 +27,7 @@ public class Room
         Description = description;
         FirstLook = firstLook;
         Look = look;
-        Exits = new ExitList();
+        Exits = [];
     }
 
     public Exit CreateExit(string directionName, string targetRoomId)
@@ -39,13 +39,11 @@ public class Room
 
     public string GetDescription() =>
     (
-        (
-            VisitCount <= 1
-                ? FirstEntryDescription.IsEmpty() ? Description : FirstEntryDescription
-                : Description.IsEmpty()
-                    ? FirstEntryDescription
-                    : Description
-        ) ?? ""
+        VisitCount <= 1
+            ? FirstEntryDescription.IsEmpty() ? Description : FirstEntryDescription
+            : Description.IsEmpty()
+                ? FirstEntryDescription
+                : Description
     );
 
     public string GetLookText()
@@ -58,11 +56,9 @@ public class Room
                 ? FirstLook
                 : Look;
 
-        return (
-            result.IsEmpty()
-                ? Description.IsEmpty() ? FirstEntryDescription : Description
-                : result
-        ) ?? "";
+        return result.IsEmpty()
+            ? Description.IsEmpty() ? FirstEntryDescription : Description
+            : result;
     }
 
     public bool CanGo(Noun direction, out string targetRoomId)
@@ -78,7 +74,7 @@ public class Room
             targetRoomId = exit.TargetRoomId;
             return false;
         }
-        targetRoomId = exit.TargetRoomId ?? "";
+        targetRoomId = exit.TargetRoomId;
         return true;
     }
 

@@ -9,13 +9,11 @@ public class CommandParser
     private Parser Parser { get; }
 
     private readonly World _world;
-    private readonly Room _currentRoom;
     private readonly Inventory _inventory;
 
     public CommandParser(World world, Room currentRoom, Inventory inventory)
     {
         _world = world;
-        _currentRoom = currentRoom;
         _inventory = inventory;
 
         Parser = new Parser();
@@ -27,7 +25,7 @@ public class CommandParser
             Words.Look
         );
 
-        foreach (var exit in _currentRoom.GetDiscoveredExits())
+        foreach (var exit in currentRoom.GetDiscoveredExits())
             Parser.AddNouns(exit.DirectionName);
 
         Parser.Aliases.Add(Words.Inventory, "I", "INV");
@@ -53,7 +51,7 @@ public class CommandParser
         else
         {
             result.Success = false;
-            result.Message = StandardAnswers.IDontUnderstand;
+            result.Message = StandardAnswers.DontUnderstand;
         }
 
         return result;

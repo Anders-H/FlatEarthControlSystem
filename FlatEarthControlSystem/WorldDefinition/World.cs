@@ -10,7 +10,7 @@ public class World
 
     public World()
     {
-        Rooms = new List<Room>();
+        Rooms = [];
     }
 
     public int RoomCount =>

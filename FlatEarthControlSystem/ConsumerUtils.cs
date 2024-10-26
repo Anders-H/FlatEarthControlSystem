@@ -9,7 +9,7 @@ public class ConsumerUtils
     public string GetHostPath() =>
         new FileInfo(
             Uri.UnescapeDataString(
-                new UriBuilder(Assembly.GetExecutingAssembly()!.Location!).Path
+                new UriBuilder(Assembly.GetExecutingAssembly().Location).Path
             )
         ).FullName;
 
