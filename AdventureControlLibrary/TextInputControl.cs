@@ -10,7 +10,7 @@ public partial class TextInputControl : UserControl
     private readonly Bitmap _bitmap;
     private readonly Matrix _characterMatrix;
     private bool _cursorVisible;
-    public const int PixelsWidth = 650;
+    public const int PixelsWidth = 640;
     public const int PixelsHeight = 104;
     public const int CharactersWidth = 80;
     public const int CharactersHeight = 13;
@@ -46,8 +46,8 @@ public partial class TextInputControl : UserControl
     private void TextInputControl_Paint(object sender, PaintEventArgs e)
     {
         var g = e.Graphics;
-        g.CompositingQuality = CompositingQuality.HighQuality;
-        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+        g.CompositingQuality = CompositingQuality.HighSpeed;
+        g.InterpolationMode = InterpolationMode.NearestNeighbor;
 
         for (var y = 0; y < CharactersHeight; y++)
             for (var x = 0; x < CharactersWidth; x++)
@@ -97,8 +97,30 @@ public partial class TextInputControl : UserControl
 
                 ResetBlink();
                 break;
+            case Keys.Home:
+                CursorX = 0;
+                ResetBlink();
+                break;
+            case Keys.End:
+                GoToLastCharacter();
+                break;
             case Keys.Back:
-                // TODO!!!!
+                if (CursorX == CharactersWidth - 1)
+                {
+                    _characterMatrix.SetAt(CharactersWidth - 2, CursorY, _characterMatrix.GetAt(CharactersWidth - 1, CursorY));
+                    _characterMatrix.SetAt(CharactersWidth - 1, CursorY, ' ');
+                    CursorX--;
+                }
+                else if (CursorX > 0 && CursorX < CharactersWidth - 1)
+                {
+                    for (var x = CursorX - 1; x < CharactersWidth - 1; x++)
+                        _characterMatrix.SetAt(x, CursorY, _characterMatrix.GetAt(x + 1, CursorY));
+
+                    _characterMatrix.SetAt(CharactersWidth - 1, CursorY, ' ');
+                    CursorX--;
+                }
+
+                ResetBlink();
                 break;
             case Keys.Delete:
                 // TODO!!!!
@@ -107,7 +129,8 @@ public partial class TextInputControl : UserControl
                 // TODO!!!!
                 break;
             case Keys.Insert:
-                DoInsert();
+                _characterMatrix.InsertAt(CursorX, CursorY);
+                ResetBlink();
                 break;
             case Keys.Space:
             case Keys.Oemcomma:
@@ -244,19 +267,35 @@ public partial class TextInputControl : UserControl
         }
     }
 
+    private void GoToLastCharacter()
+    {
+        if (_characterMatrix.GetAt(CharactersWidth - 1, CursorY) != ' ')
+        {
+            CursorX = CharactersWidth - 1;
+            ResetBlink();
+            return;
+        }
+
+        for (var x = CharactersWidth - 2; x >= 0; x--)
+        {
+            if (_characterMatrix.GetAt(x, CursorY) != ' ')
+            {
+                CursorX = x + 1;
+                ResetBlink();
+                return;
+            }
+        }
+    }
+
     private void TypeCharacter(char character)
     {
-        DoInsert();
+        _characterMatrix.InsertAt(CursorX, CursorY);
         _characterMatrix.SetAt(CursorX, CursorY, character);
 
         if (CursorX < CharactersWidth - 1)
             CursorX++;
 
         ResetBlink();
-    }
-
-    private void DoInsert()
-    {
     }
 
     private void ResetBlink()

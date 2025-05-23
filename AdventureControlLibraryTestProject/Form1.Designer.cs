@@ -34,16 +34,16 @@
             // textInputControl1
             // 
             textInputControl1.BackColor = Color.Black;
-            textInputControl1.Location = new Point(132, 368);
+            textInputControl1.Location = new Point(8, 180);
             textInputControl1.Name = "textInputControl1";
-            textInputControl1.Size = new Size(1120, 256);
+            textInputControl1.Size = new Size(1084, 256);
             textInputControl1.TabIndex = 0;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1465, 728);
+            ClientSize = new Size(1096, 728);
             Controls.Add(textInputControl1);
             KeyPreview = true;
             Name = "Form1";
