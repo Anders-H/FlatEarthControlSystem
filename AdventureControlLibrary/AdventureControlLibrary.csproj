@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="CharacterMatrix" Version="1.2.0" />
+    <PackageReference Include="TextAdventureGameInputParser" Version="1.2.0" />
+    <PackageReference Include="WindowsInputBufferAccess" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

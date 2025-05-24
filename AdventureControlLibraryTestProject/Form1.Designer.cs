@@ -38,6 +38,7 @@
             textInputControl1.Name = "textInputControl1";
             textInputControl1.Size = new Size(1084, 256);
             textInputControl1.TabIndex = 0;
+            textInputControl1.CommandEntered += textInputControl1_CommandEntered;
             // 
             // Form1
             // 
@@ -48,6 +49,7 @@
             KeyPreview = true;
             Name = "Form1";
             Text = "Form1";
+            Load += Form1_Load;
             ResumeLayout(false);
         }
 

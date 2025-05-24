@@ -1,14 +1,17 @@
 ﻿using System.Drawing.Drawing2D;
+using System.Text;
+using TextAdventureGameInputParser;
 using Matrix = CharacterMatrix.Matrix;
 
 namespace AdventureControlLibrary;
 
 public partial class TextInputControl : UserControl
 {
-    public event CommandEnteredDelegate CommandEntered;
+    public event CommandEnteredDelegate? CommandEntered;
     private readonly TerminalFont _font;
     private readonly Bitmap _bitmap;
     private readonly Matrix _characterMatrix;
+    private bool _inputEnabled = true;
     private bool _cursorVisible;
     public const int PixelsWidth = 640;
     public const int PixelsHeight = 104;
@@ -18,6 +21,7 @@ public partial class TextInputControl : UserControl
     public const int CharacterHeight = 8;
     public int CursorX { get; private set; }
     public const int CursorY = 12;
+    public Parser Parser { get; } = new();
 
     public TextInputControl()
     {
@@ -76,13 +80,15 @@ public partial class TextInputControl : UserControl
                 {
                     _bitmap.SetPixel(pixelX, pixelY, matrix.Pixels[x, y] ? color : BackgroundColor);
                 }
-
             }
         }
     }
 
     public void TellCursorActivity(Keys key)
     {
+        if (!_inputEnabled)
+            return;
+
         switch (key)
         {
             case Keys.Left:
@@ -123,19 +129,60 @@ public partial class TextInputControl : UserControl
                 ResetBlink();
                 break;
             case Keys.Delete:
-                // TODO!!!!
+                if (CursorX == CharactersWidth - 1)
+                {
+                    _characterMatrix.SetAt(CharactersWidth - 1, CursorY, ' ');
+                }
+                else if (CursorX == CharactersWidth - 2)
+                {
+                    _characterMatrix.SetAt(CharactersWidth - 2, CursorY, _characterMatrix.GetAt(CharactersWidth - 1, CursorY));
+                    _characterMatrix.SetAt(CharactersWidth - 1, CursorY, ' ');
+                }
+                else if (CursorX >= 0 && CursorX < CharactersWidth - 2)
+                {
+                    for (var x = CursorX; x < CharactersWidth - 1; x++)
+                        _characterMatrix.SetAt(x, CursorY, _characterMatrix.GetAt(x + 1, CursorY));
+
+                    _characterMatrix.SetAt(CharactersWidth - 1, CursorY, ' ');
+                }
+
+                ResetBlink();
                 break;
             case Keys.Enter:
-                // TODO!!!!
+                if (!HasInput(out var input))
+                {
+                    _characterMatrix.ScrollUp();
+                    ResetBlink();
+                    return;
+                }
+
+                var success = GetParsedInput(input, out var sentence, out var sentenceString);
+                _characterMatrix.ScrollUp();
+                CursorX = 0;
+
+                if (sentenceString.Length > 0)
+                {
+                    for (var x = 0; x < CharactersWidth; x++)
+                        _characterMatrix.SetAt(x, CursorY - 1, x < sentenceString.Length ? sentenceString[x] : ' ');
+                }
+
+                ResetBlink();
+                Refresh();
+
+                if (!success || sentence == null)
+                    Write("I DON'T UNDERSTAND.");
+                else
+                    CommandEntered?.Invoke(this, sentence);
+
                 break;
             case Keys.Insert:
                 _characterMatrix.InsertAt(CursorX, CursorY);
                 ResetBlink();
                 break;
+            case Keys.Oem2: // Apostrophe
             case Keys.Space:
             case Keys.Oemcomma:
             case Keys.OemPeriod:
-            case Keys.OemQuestion:
             case Keys.OemMinus:
             case Keys.D0:
             case Keys.D1:
@@ -178,6 +225,102 @@ public partial class TextInputControl : UserControl
         }
     }
 
+    public void Write(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+            return;
+
+        _inputEnabled = false;
+        timer1.Enabled = false;
+        _cursorVisible = false;
+        Refresh();
+        var wrappedText = WordWrap(text);
+
+        foreach (var t in wrappedText)
+        {
+            if (t.Length > 0)
+            {
+                for (var x = 0; x < t.Length; x++)
+                {
+                    _characterMatrix.SetAt(x, CursorY, t[x]);
+                    Thread.Yield();
+                    Refresh();
+                }
+
+                _characterMatrix.ScrollUp();
+            }
+            else
+            {
+                Thread.Yield();
+                _characterMatrix.ScrollUp();
+                Refresh();
+            }
+        }
+
+        timer1.Enabled = true;
+        _inputEnabled = true;
+        ResetBlink();
+        WindowsInput.Buffer.FlushKeyboardBuffer(Handle);
+    }
+
+    private static List<string> WordWrap(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+            return [text];
+
+        var words = text.Split(' ');
+        var line = "";
+        var result = new List<string>();
+
+        foreach (var word in words)
+        {
+            if ((line + word).Length > CharactersWidth)
+            {
+                if (!string.IsNullOrEmpty(line))
+                    result.Add(line.Trim());
+
+                line = "";
+            }
+            line += word + " ";
+        }
+
+        if (!string.IsNullOrWhiteSpace(line))
+            result.Add(line.TrimEnd());
+
+        return result;
+    }
+
+    private bool HasInput(out string input)
+    {
+        var s = new StringBuilder();
+
+        for (var x = 0; x < CharactersWidth; x++)
+            s.Append(_characterMatrix.GetAt(x, CursorY));
+
+        input = s.ToString().Trim();
+        return !string.IsNullOrWhiteSpace(input);
+    }
+
+    private bool GetParsedInput(string entered, out Sentence? sentence, out string sentenceAsString)
+    {
+        var parsed = Parser.Parse(entered);
+        
+        if (parsed.ParseSuccess)
+        {
+            sentence = parsed;
+            sentenceAsString = sentence.CleanInput;
+            return true;
+        }
+
+        sentence = null;
+
+        while (entered.IndexOf("  ", StringComparison.Ordinal) > -1)
+            entered = entered.Replace("  ", " ");
+
+        sentenceAsString = entered;
+        return false;
+    }
+
     private char GetCharacter(Keys key)
     {
         switch (key)
@@ -186,8 +329,8 @@ public partial class TextInputControl : UserControl
                 return ',';
             case Keys.OemPeriod:
                 return '.';
-            case Keys.OemQuestion:
-                return '?';
+            case Keys.Oem2:
+                return '\'';
             case Keys.OemMinus:
                 return '-';
             case Keys.D0:

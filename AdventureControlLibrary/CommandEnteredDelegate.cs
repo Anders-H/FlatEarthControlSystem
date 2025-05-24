@@ -1,3 +1,5 @@
-﻿namespace AdventureControlLibrary;
+﻿using TextAdventureGameInputParser;
 
-public delegate void CommandEnteredDelegate(object? sender, string command);
+namespace AdventureControlLibrary;
+
+public delegate void CommandEnteredDelegate(object? sender, Sentence command);
