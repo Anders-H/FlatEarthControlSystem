@@ -39,6 +39,17 @@ public partial class Form1 : Form
 
     private void textInputControl1_CommandEntered(object sender, TextAdventureGameInputParser.Sentence command)
     {
-        textInputControl1.Write("THANK YOU! THIS WAS NICE! NOW I HAVE TO WRITE A LONG TEXT TO TEST THE WORD WRAPPING SHIT THAT I HAVE IMPLEMENTED IN THIS TEST PROGRAM.");
+        switch (command.CleanInput)
+        {
+            case "N":
+                graphicsOutputControl1.SetGraphics(@"
+
+
+");
+                break;
+            default:
+                textInputControl1.Write("THANK YOU! THIS WAS NICE! NOW I HAVE TO WRITE A LONG TEXT TO TEST THE WORD WRAPPING SHIT THAT I HAVE IMPLEMENTED IN THIS TEST PROGRAM.");
+                return;
+        }
     }
 }
